@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1095267255916",
+    "project_id": "ocean-park-621",
+    "storage_bucket": "ocean-park-621.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095267255916:android:ad1037e821e9e3bf107a49",
+        "android_client_info": {
+          "package_name": "com.oceanpark.ocean_park"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095267255916-5271ssa0jqkbvbta3crvj2uku996fohn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.oceanpark.ocean_park",
+            "certificate_hash": "fb51ad4fda2be8db7fb75919542f162410030dee"
+          }
+        },
+        {
+          "client_id": "1095267255916-til6ci7a46f3n5bbrephmmbo61v8davv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5PMq6ZwXBvWymwi_iDD2r19fYyTXMNmE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095267255916-til6ci7a46f3n5bbrephmmbo61v8davv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
