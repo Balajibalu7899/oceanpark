@@ -19,7 +19,7 @@ class CartService extends ChangeNotifier {
   List<Cart> get cart => _cart;
   List<Cart>? _temp = <Cart>[];
   double _totalprice = 0;
-
+  double get totalprice => _totalprice;
   List<Cart> get temp => _temp!;
 
   Cart get activeProduct => _cart[_ativeProduct!];
@@ -98,20 +98,12 @@ class CartService extends ChangeNotifier {
 
   //to increase the units
   void increaseQuantity(int index) async {
-    _cart[index].units = _cart[index].units! + 1;
-    final data = await FirebaseFirestore.instance
-        .collection("products")
-        .doc(_cart[index].productId)
-        .get();
-    Product product = Product.fromJson(data.data()!);
-
-    _cart[index].price = calculatePrice(product.price!, cart[index].units!);
     try {
+      _cart[index].units = _cart[index].units! + 1;
       await collection
           .doc("${user!.uid}/cart/${_cart[index].productId}")
-          .update({"units": _cart[index].units, "price": _cart[index].price});
-
-      for (int i = 0; i < _cart.length; i++) {}
+          .update({"units": _cart[index].units});
+      _totalprice += _cart[index].price!;
       notifyListeners();
     } catch (error) {
       print(error);
@@ -120,31 +112,17 @@ class CartService extends ChangeNotifier {
 
 //decrease the units
   decreaseQuantity(int index) async {
-    _cart[index].units = _cart[index].units! - 1;
-    final data = await FirebaseFirestore.instance
-        .collection("products")
-        .doc(_cart[index].productId)
-        .get();
-    Product product = Product.fromJson(data.data()!);
-    print(product.price);
-    _cart[index].price = calculatePrice(product.price!, cart[index].units!);
     try {
+      _cart[index].units = _cart[index].units! - 1;
       await collection
           .doc("${user!.uid}/cart/${_cart[index].productId}")
           .update({"units": _cart[index].units, "price": _cart[index].price});
+      _totalprice -= _cart[index].price!;
       notifyListeners();
     } catch (error) {
       print(error);
     }
     notifyListeners();
-  }
-
-  //to calculate the units to price
-  calculatePrice(double price, int units) {
-    double total;
-
-    total = (price) * units.toDouble();
-    return total;
   }
 
 //to delete the product from the cart
@@ -153,6 +131,7 @@ class CartService extends ChangeNotifier {
       await collection
           .doc("${user!.uid}/cart/${_cart[itemIndex].productId}")
           .delete();
+      _totalprice -= _cart[itemIndex].price!;
       _cart.remove(_cart[itemIndex]);
       notifyListeners();
     } catch (error) {

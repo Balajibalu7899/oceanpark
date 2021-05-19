@@ -1,6 +1,9 @@
+import 'package:ocean_park/models/customer/cart.dart';
+
 import 'address.dart';
 import 'delivered.dart';
 import 'dispatched.dart';
+import 'order_product.dart';
 import 'ordered.dart';
 
 class Order {
@@ -15,9 +18,10 @@ class Order {
   double? discount;
   String? couponCode;
   Address? address;
-  Ordered? ordered;  
+  Ordered? ordered;
   Dispatched? dispatched;
   Delivered? delivered;
+  List<OrderProduct>? products;
 
   Order({
     this.customerId,
@@ -34,6 +38,7 @@ class Order {
     this.ordered,
     this.dispatched,
     this.delivered,
+    this.products,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {

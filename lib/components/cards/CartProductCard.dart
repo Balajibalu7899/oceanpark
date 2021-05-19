@@ -59,7 +59,7 @@ class CardProductCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Text(
-                    "Rs-${cart.price.toString()}/${cart.quantityType}",
+                    "₹ ${cart.price}/${cart.quantityType}",
                     maxLines: 1,
                     style: Theme.of(context).textTheme.headline3,
                   ),

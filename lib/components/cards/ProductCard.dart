@@ -57,7 +57,7 @@ class ProductCard extends StatelessWidget {
             height: 10,
           ),
           Align(
-            alignment: Alignment(-0.9, 1),
+            alignment: Alignment(-0.8, 1),
             child: Text(
               product.title ?? "",
               maxLines: 1,
@@ -67,7 +67,7 @@ class ProductCard extends StatelessWidget {
           Align(
             alignment: Alignment(-0.9, 1),
             child: Text(
-              "Boneless Small cuts",
+              product.badge ?? "Boneless Small cuts",
               style: Theme.of(context).textTheme.headline4,
             ),
           ),

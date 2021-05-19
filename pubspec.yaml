@@ -23,6 +23,7 @@ dependencies:
   location: ^4.1.1
   #geocoder: ^0.2.1
   image_picker: ^0.7.4
+  upi_india: ^3.0.1
 
 
 
