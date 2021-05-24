@@ -1,96 +1,83 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-import 'package:ocean_park/models/product/cut.dart';
-
+import 'cut.dart';
+import 'specials.dart';
 import 'delivery.dart';
 
 class Product {
   String? productId;
+  String? image;
   String? title;
   String? subTitle;
   String? description;
-  String? image;
-  double? price;
-  int? discount;
-  String? tag;
-  String? badge;
-  String? quality;
-  double? weight;
   List<String>? type;
+  double? price;
+  double? offerPrice;
+  double? discount;
+  double? weight;
+  String? unitType;
+  String? badge;
+  List<String>? tags;
   List<Cut>? cuts;
   Delivery? delivery;
+  Specials? specials;
   List<String>? outlets;
-  String? unittype;
 
   Product({
     this.productId,
+    this.image,
     this.title,
     this.subTitle,
     this.description,
-    this.image,
-    this.price,
-    this.discount,
-    this.tag,
-    this.badge,
-    this.quality,
-    this.weight,
     this.type,
+    this.price,
+    this.offerPrice,
+    this.discount,
+    this.weight,
+    this.unitType,
+    this.badge,
+    this.tags,
     this.cuts,
     this.delivery,
+    this.specials,
     this.outlets,
-    this.unittype,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
+  factory Product.fromDoc(DocumentSnapshot doc) {
     try {
       return Product(
-        productId: json['product_id'] as String?,
-        title: json['title'] as String?,
-        subTitle: json['sub_title'] as String?,
-        description: json['description'] as String?,
-        image: json['image'] as String?,
-        price: json['price']!.toDouble() as double?,
-        discount: json['discount'] as int?,
-        tag: json['tag'] as String?,
-        badge: json['badge'] as String?,
-        quality: json['quality'] as String?,
-        weight: json['weight'] as double?,
-        unittype: json['unit_type'] as String,
-        type: json['type'] == null ? null : List<String>.from(json['type']),
-        cuts: json['cuts'] == null
+        productId: doc.id,
+        image: doc.data()!['image'] as String?,
+        title: doc.data()!['title'] as String?,
+        subTitle: doc.data()!['sub_title'] as String?,
+        description: doc.data()!['description'] as String?,
+        price: doc.data()!['price']!.toDouble() as double?,
+        offerPrice: doc.data()!['offer_price'].toDouble() as double?,
+        discount: (((doc.data()!['price'] - doc.data()!['offer_price']) /
+                doc.data()!['price']) *
+            100),
+        badge: doc.data()!['badge'] as String?,
+        weight: doc.data()!['weight'] as double?,
+        unitType: doc.data()!['unit_type'] as String,
+        type: doc.data()!['categories'] == null
             ? null
-            : (json['cuts'] as List<dynamic>?)
+            : List<String>.from(doc.data()!['categories']),
+        cuts: doc.data()!['cuts'] == null
+            ? null
+            : (doc.data()!['cuts'] as List<dynamic>?)
                 ?.map((e) => Cut.fromJson(e as Map<String, dynamic>))
                 .toList(),
-        delivery: json['delivery'] == null
+        delivery: doc.data()!['delivery'] == null
             ? null
-            : Delivery.fromJson(json['delivery'] as Map<String, dynamic>),
-        outlets: json['outlets'] as List<String>?,
+            : Delivery.fromJson(
+                doc.data()!['delivery'] as Map<String, dynamic>),
+        outlets: doc.data()!['outlets'] as List<String>?,
       );
     } catch (err) {
+      print(doc.id);
       print(err);
+
       return Product();
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'product_id': productId,
-      'title': title,
-      'sub_title': subTitle,
-      'description': description,
-      'image': image,
-      'price': price,
-      'discount': discount,
-      'tag': tag,
-      'badge': badge,
-      'quality': quality,
-      'weight': weight,
-      'unit_type': unittype,
-      'type': type,
-      'cuts': cuts,
-      'delivery': delivery?.toJson(),
-      'outlets': outlets,
-    };
   }
 }

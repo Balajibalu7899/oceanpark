@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ocean_park/components/cards/ProductCard.dart';
 import 'package:ocean_park/components/utilui/CustomeQuantitySelector.dart';
 import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/models/customer/cart.dart';
+import 'package:ocean_park/models/cart/cart.dart';
 import 'package:ocean_park/models/product/product.dart';
 import 'package:ocean_park/services/cart_service.dart';
 import 'package:ocean_park/services/products_service.dart';
@@ -30,56 +30,73 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         clipBehavior: Clip.none,
-        child: Container(
-          height: 45,
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(100),
-              topRight: Radius.circular(100),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 10,
             ),
-          ),
-          child: Row(
-            children: [
-              Text(
-                "Rs-${widget.product.price}",
-                style: Theme.of(context).textTheme.headline2,
+            Text(
+              "₹${widget.product.price}",
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              "₹${(widget.product.price! + 20.0)}",
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.headline3!.fontSize,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).textTheme.headline4!.color,
+                decoration: TextDecoration.lineThrough,
+                decorationThickness: 3.0,
               ),
-              Spacer(),
-              inCart!
-                  ? CustomeQuantitySelector(
-                      productId: widget.product.productId,
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton(
-                        child: Text(
-                          "Add to Cart",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              "20% off",
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.headline1!.fontSize,
+                fontWeight: Theme.of(context).textTheme.headline1!.fontWeight,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            Spacer(),
+            inCart!
+                ? CustomeQuantitySelector(
+                    productId: widget.product.productId,
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      child: Text(
+                        "Add to Cart",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
                         ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Theme.of(context).primaryColor,
-                        ),
-                        onPressed: () async {
-                          Cart cart = Cart(
-                            productId: widget.product.productId,
-                            price: widget.product.price,
-                            units: 1,
-                          );
-                          await Provider.of<CartService>(context, listen: false)
-                              .addtoCart(cart);
-                          inCart =
-                              Provider.of<CartService>(context, listen: false)
-                                  .inCart(widget.product.productId!);
-                          setState(() {});
-                        },
                       ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                      ),
+                      onPressed: () async {
+                        Cart cart = Cart(
+                          productId: widget.product.productId,
+                          price: widget.product.price,
+                          // units: 1,
+                        );
+                        await Provider.of<CartService>(context, listen: false)
+                            .addtoCart(cart);
+                        inCart =
+                            Provider.of<CartService>(context, listen: false)
+                                .inCart(widget.product.productId!);
+                        setState(() {});
+                      },
                     ),
-            ],
-          ),
+                  ),
+          ],
         ),
       ),
       body: SizedBox(
@@ -108,65 +125,29 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     right: 4,
                     left: 4,
                     child: Container(
-                      height: 200,
                       width: MediaQuery.of(context).size.width,
                       margin: Theme.of(context).cardTheme.margin,
+                      padding: EdgeInsets.all(10),
                       decoration: containerdecoration,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              widget.product.title ?? " ",
-                              maxLines: 1,
-                              style: Theme.of(context).textTheme.headline2,
-                            ),
+                          Text(
+                            widget.product.title ?? " ",
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.headline1,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Fresh Out | Best Quality",
-                              maxLines: 1,
-                              style: Theme.of(context).textTheme.headline3,
-                            ),
+                          SizedBox(height: 5),
+                          Text(
+                            "Fresh Out | Best Quality",
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                right: 8, left: 8, bottom: 8, top: 2),
-                            child: Text(
-                              widget.product.description!,
-                              maxLines: 3,
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 8, left: 8, bottom: 8, top: 2),
-                                child: Text(
-                                  "Price:${(widget.product.price).toString()}",
-                                  maxLines: 4,
-                                  style: Theme.of(context).textTheme.headline2,
-                                ),
-                              ),
-                              Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 8, left: 8, bottom: 8, top: 2),
-                                child: Text(
-                                  "Discount Price:${(widget.product.discount).toString()}",
-                                  maxLines: 4,
-                                  style: TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                      fontSize: Theme.of(context)
-                                          .textTheme
-                                          .headline2!
-                                          .fontSize),
-                                ),
-                              ),
-                            ],
+                          SizedBox(height: 5),
+                          Text(
+                            widget.product.description!,
+                            maxLines: 3,
+                            style: Theme.of(context).textTheme.headline3,
                           ),
                         ],
                       ),
@@ -199,7 +180,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                       ),
                       Text(
-                        "Net Weight:${widget.product.weight} ${widget.product.unittype}",
+                        "Net Weight:${widget.product.weight} ${widget.product.unitType}",
                         style: Theme.of(context).textTheme.headline3,
                       ),
                     ],

@@ -21,11 +21,8 @@ class ProductService extends ChangeNotifier {
   void getProducts() async {
     try {
       final data = await collection.get();
-
-      data.docs.forEach((element) {
-        Map<String, dynamic> tempproduct = element.data();
-        tempproduct.addAll({"product_id": element.id});
-        _products.add(Product.fromJson(tempproduct));
+      data.docs.forEach((product) {
+        _products.add(Product.fromDoc(product));
       });
       status = Status.completed();
       notifyListeners();

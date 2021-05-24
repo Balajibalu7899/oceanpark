@@ -36,7 +36,7 @@ android {
     defaultConfig {
        
         applicationId "com.oceanpark.ocean_park"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

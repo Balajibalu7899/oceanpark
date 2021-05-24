@@ -13,7 +13,7 @@ class CategoryCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            height: 120,
+            height: 150,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
@@ -26,7 +26,7 @@ class CategoryCard extends StatelessWidget {
           Spacer(),
           Text(
             "Fresh Cut",
-            style: Theme.of(context).textTheme.headline3,
+            style: Theme.of(context).textTheme.headline2,
           ),
         ],
       ),

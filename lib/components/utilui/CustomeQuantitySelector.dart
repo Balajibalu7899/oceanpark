@@ -25,7 +25,9 @@ class _CustomeQuantitySelectorState extends State<CustomeQuantitySelector> {
   Widget build(BuildContext context) {
     return Consumer<CartService>(builder: (__, snapshot, child) {
       return Container(
-        width: 130,
+        padding: EdgeInsets.all(5),
+        // width: 130,
+        height: 60,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -35,12 +37,15 @@ class _CustomeQuantitySelectorState extends State<CustomeQuantitySelector> {
                   Provider.of<CartService>(context, listen: false)
                       .decreaseQuantity(itemIndex!);
                 }),
-            Text(
-              snapshot.cart[itemIndex!].units!.toString(),
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontSize: Theme.of(context).textTheme.headline1!.fontSize,
-                fontWeight: Theme.of(context).textTheme.headline1!.fontWeight,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                snapshot.cart[itemIndex!].quantity!.toString(),
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  fontSize: Theme.of(context).textTheme.headline1!.fontSize,
+                  fontWeight: Theme.of(context).textTheme.headline1!.fontWeight,
+                ),
               ),
             ),
             CustomeIconButton(

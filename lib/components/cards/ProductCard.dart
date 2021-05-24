@@ -12,8 +12,9 @@ class ProductCard extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var product2 = product;
     return Container(
-      height: 310,
+      // height: 310,
       margin: Theme.of(context).cardTheme.margin,
       decoration: containerdecoration,
       child: Column(
@@ -36,86 +37,131 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                top: -1,
-                right: -1,
-                child: Container(
-                  height: 20,
-                  padding: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
+              if (product.badge != null)
+                Positioned(
+                  top: -1,
+                  right: -1,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                    decoration: BoxDecoration(
                       color: Theme.of(context).accentColor,
-                      borderRadius: BorderRadius.circular(3)),
-                  child: Text(
-                    product.tag ?? " ",
-                    style: TextStyle(color: Colors.white),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      product.badge!,
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
                   ),
-                ),
-              )
+                )
             ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Align(
-            alignment: Alignment(-0.8, 1),
-            child: Text(
-              product.title ?? "",
-              maxLines: 1,
-              style: Theme.of(context).textTheme.headline3,
-            ),
-          ),
-          Align(
-            alignment: Alignment(-0.9, 1),
-            child: Text(
-              product.badge ?? "Boneless Small cuts",
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Text(
-                      "Weight:${product.weight}/${product.unittype}",
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      "Rs-${product.price} 20%Off",
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  "Discount:${product.discount}",
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  product.title!,
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context).textTheme.headline1,
                 ),
-              ),
-              Spacer(),
-              CustomeOutlineButton(
-                title: "Buy",
-                tap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ProductDetailsPage(
-                          product: product,
+                Text(
+                  product.subTitle!,
+                  style: TextStyle(
+                    fontSize: Theme.of(context).textTheme.headline3!.fontSize,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Weight: ${product.weight}/${product.unitType}",
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
+                        // Spacer(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "₹${product.offerPrice}",
+                              style: Theme.of(context).textTheme.headline2,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            if (product.offerPrice! < product.price!)
+                              Text(
+                                "₹${product.price}",
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .fontSize,
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .fontWeight,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .headline4!
+                                      .color,
+                                  decoration: TextDecoration.lineThrough,
+                                  decorationThickness: 3.0,
+                                ),
+                              ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            if (product.discount! > 1.0)
+                              Text(
+                                "${product.discount!.toStringAsFixed(2)}% Off",
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .fontSize,
+                                  fontWeight: Theme.of(context)
+                                      .textTheme
+                                      .headline2!
+                                      .fontWeight,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .headline4!
+                                      .color,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    CustomeOutlineButton(
+                      title: "Buy",
+                      tap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProductDetailsPage(
+                                product: product,
+                              );
+                            },
+                          ),
                         );
                       },
                     ),
-                  );
-                },
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           )
         ],
       ),

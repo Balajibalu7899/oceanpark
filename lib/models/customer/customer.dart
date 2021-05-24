@@ -1,5 +1,4 @@
 import 'addresses.dart';
-import 'cart.dart';
 
 class Customer {
   String? userId;
@@ -10,7 +9,6 @@ class Customer {
   String? tag;
   int? defaultAddress;
   List<Addresses>? addresses;
-  List<Cart>? cart;
 
   Customer({
     this.userId,
@@ -21,7 +19,6 @@ class Customer {
     this.tag,
     this.defaultAddress,
     this.addresses,
-    this.cart,
   });
 
   factory Customer.fromJson(Map<String, dynamic> json) {
@@ -36,9 +33,6 @@ class Customer {
       addresses: (json['addresses'] as List<dynamic>?)
           ?.map((e) => Addresses.fromJson(e as Map<String, dynamic>))
           .toList(),
-      // cart: (json['cart'] as List<dynamic>?)
-      //     ?.map((e) => Cart.fromJson(e as Map<String, dynamic>))
-      //     .toList(),
     );
   }
 
@@ -51,7 +45,6 @@ class Customer {
       'tag': tag ?? "new",
       'default_address': defaultAddress ?? 0,
       'addresses': addresses?.map((e) => e.toJson()).toList(),
-      'cart': cart?.map((e) => e.toJson()).toList() ?? [],
     };
   }
 }

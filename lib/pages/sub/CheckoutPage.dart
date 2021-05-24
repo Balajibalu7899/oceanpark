@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ocean_park/components/utilui/CouponButtomSheet.dart';
 import 'package:ocean_park/components/utilui/CustomeIconButton.dart';
 import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/models/customer/cart.dart';
 import 'package:ocean_park/pages/sub/PaymentsPage.dart';
 import 'package:ocean_park/services/cart_service.dart';
 import 'package:ocean_park/services/custome_service.dart';

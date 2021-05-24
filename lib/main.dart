@@ -8,6 +8,7 @@ import 'package:ocean_park/pages/main/HomeMain.dart';
 import 'package:ocean_park/services/cart_service.dart';
 import 'package:ocean_park/services/custome_service.dart';
 import 'package:ocean_park/services/auth_service.dart';
+import 'package:ocean_park/services/order_service.dart';
 import 'package:ocean_park/services/products_service.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,9 @@ void main() {
               ),
               ChangeNotifierProvider(
                 create: (_) => CartService(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => OrderService(),
               ),
             ],
             child: MyApp(),
@@ -66,7 +70,6 @@ Widget baseHome(AppState appState) {
     case AppState.unauthorized:
       return LoginPage();
     case AppState.authorized:
-    
       return HomeMain();
     case AppState.noAccount:
       return CreateAccount();

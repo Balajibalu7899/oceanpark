@@ -7,14 +7,14 @@ class CustomeIconButton extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: callback,
-      child: Container(
-        height: 35,
-        width: 40,
-        decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(5)),
+    return SizedBox(
+      width: 40,
+      height: 40,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(5)),
+        ),
+        onPressed: callback,
         child: Icon(
           iconname,
           color: Colors.white,

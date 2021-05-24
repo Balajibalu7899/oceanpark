@@ -8,13 +8,50 @@ class LightTheme {
     return ThemeData(
       primaryColor: primaryColor,
       accentColor: accentColor,
+      backgroundColor: Colors.white,
       scaffoldBackgroundColor: scaffoldColor,
-      textTheme: Lighttexttheme,
+      textTheme: lighttexttheme,
       //inputtext theme
       inputDecorationTheme: decoration,
       //button theme
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color>(backgroundColor),
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color>(
+              lighttexttheme.headline1!.color!),
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              side: BorderSide(color: primaryColor),
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(backgroundColor),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
       buttonTheme: ButtonThemeData(
-        buttonColor: primaryColor,
+        buttonColor: backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

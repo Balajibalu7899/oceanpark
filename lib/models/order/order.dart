@@ -1,26 +1,22 @@
-import 'package:ocean_park/models/customer/cart.dart';
-
 import 'address.dart';
-import 'delivered.dart';
-import 'dispatched.dart';
 import 'order_product.dart';
-import 'ordered.dart';
+import 'OrdereState.dart';
 
 class Order {
   String? customerId;
   String? outlet;
   String? payment;
-  String? time;
+  int? time;
   String? expectedTime;
   String? status;
   int? itemsCount;
-  double? price;
+  double? totalPrice;
   double? discount;
   String? couponCode;
   Address? address;
-  Ordered? ordered;
-  Dispatched? dispatched;
-  Delivered? delivered;
+  OrdereState? ordered;
+  OrdereState? dispatched;
+  OrdereState? delivered;
   List<OrderProduct>? products;
 
   Order({
@@ -31,7 +27,7 @@ class Order {
     this.expectedTime,
     this.status,
     this.itemsCount,
-    this.price,
+    this.totalPrice,
     this.discount,
     this.couponCode,
     this.address,
@@ -46,11 +42,11 @@ class Order {
       customerId: json['customer_id'] as String?,
       outlet: json['outlet'] as String?,
       payment: json['payment'] as String?,
-      time: json['time'] as String?,
+      time: json['time'] as int?,
       expectedTime: json['expected_time'] as String?,
       status: json['status'] as String?,
       itemsCount: json['items_count'] as int?,
-      price: json['price'] as double?,
+      totalPrice: json['price'] as double?,
       discount: json['discount'] as double?,
       couponCode: json['coupon_code'] as String?,
       address: json['address'] == null
@@ -58,13 +54,13 @@ class Order {
           : Address.fromJson(json['address'] as Map<String, dynamic>),
       ordered: json['ordered'] == null
           ? null
-          : Ordered.fromJson(json['ordered'] as Map<String, dynamic>),
+          : OrdereState.fromJson(json['ordered'] as Map<String, dynamic>),
       dispatched: json['dispatched'] == null
           ? null
-          : Dispatched.fromJson(json['dispatched'] as Map<String, dynamic>),
+          : OrdereState.fromJson(json['dispatched'] as Map<String, dynamic>),
       delivered: json['delivered'] == null
           ? null
-          : Delivered.fromJson(json['delivered'] as Map<String, dynamic>),
+          : OrdereState.fromJson(json['delivered'] as Map<String, dynamic>),
     );
   }
 
@@ -77,7 +73,7 @@ class Order {
       'expected_time': expectedTime,
       'status': status,
       'items_count': itemsCount,
-      'price': price,
+      'price': totalPrice,
       'discount': discount,
       'coupon_code': couponCode,
       'address': address?.toJson(),

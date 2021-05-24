@@ -35,14 +35,16 @@
 	},
 
 	{	
-		"__className": "Payment",
-		"customer_id": "12SSD12ASD12",
-		"order_id": "12SSD12ASD12",
-		"time": "2012-04-23T18:25:43.511Z",
+		"__className": "Cart",
+		"product_id": "12SSD12ASD12",
+		"image": "this",
+		"title": "12SSD12ASD12",
+		"sub_title": "2012-04-23T18:25:43.511Z",
 		"price": 12.23,
-		"source": "GOOGLE_PAY",
-		"status": "sent",
-		"transaction_id": "23ASD12BS12NKASD",
-		"arn_number": "232324234"
+		"offer_price": 2.23,
+		"weight": 0.5,
+		"unit_type": "Kg",
+		"quantity": 1,
+		"cut": "Medium Cut"
 	}
 ]

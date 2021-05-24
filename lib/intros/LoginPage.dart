@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ocean_park/components/utilui/CustomSnackBar.dart';
 import 'package:ocean_park/components/utilui/CustomeOutlineButton.dart';
 import 'package:ocean_park/components/utilui/CustomeTextField.dart';
+import 'package:ocean_park/global/colors/light_colors.dart';
 import 'package:ocean_park/intros/PhoneLogin.dart';
 import 'package:ocean_park/services/auth_service.dart';
 import 'package:provider/provider.dart';
@@ -47,189 +48,173 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              Container(
-                height: 350,
-                child: Column(
-                  children: [
-                    Row(
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
                       children: [
-                        InkWell(
-                          onTap: () {
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.symmetric(
+                                horizontal: 25,
+                                vertical: 15,
+                              ),
+                            ),
+                            shape: MaterialStateProperty.all<OutlinedBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(0),
+                                  bottomLeft: Radius.circular(0),
+                                  bottomRight: Radius.circular(0),
+                                ),
+                                side: BorderSide(
+                                  color: login ? primaryColor : backgroundColor,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
                             setState(() {
                               login = true;
                             });
                           },
-                          child: Container(
-                            height: 45,
-                            width: 100,
-                            margin: EdgeInsets.only(left: 10),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardTheme.color,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                              ),
-                              border: login
-                                  ? Border.all(
-                                      color: Theme.of(context).primaryColor,
-                                    )
-                                  : Border.all(
-                                      color:
-                                          Theme.of(context).cardTheme.color!),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      Theme.of(context).cardTheme.shadowColor!,
-                                  spreadRadius: 0,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text("Login",
-                                  style: login
-                                      ? TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: Theme.of(context)
-                                              .textTheme
-                                              .headline2!
-                                              .fontSize,
-                                          fontWeight: Theme.of(context)
-                                              .textTheme
-                                              .headline2!
-                                              .fontWeight)
-                                      : Theme.of(context).textTheme.headline2),
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              color: login
+                                  ? primaryColor
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .headline1!
+                                      .color,
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.symmetric(
+                                horizontal: 25,
+                                vertical: 15,
+                              ),
+                            ),
+                            shape: MaterialStateProperty.all<OutlinedBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  topLeft: Radius.circular(0),
+                                  bottomLeft: Radius.circular(0),
+                                  bottomRight: Radius.circular(0),
+                                ),
+                                side: BorderSide(
+                                  color:
+                                      !login ? primaryColor : backgroundColor,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
                             setState(() {
                               login = false;
                             });
                           },
-                          child: Container(
-                            height: 45,
-                            width: 100,
-                            margin: EdgeInsets.only(),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardTheme.color,
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(10),
-                              ),
-                              border: login
-                                  ? Border.all(
-                                      color: Theme.of(context).cardTheme.color!)
-                                  : Border.all(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      Theme.of(context).cardTheme.shadowColor!,
-                                  spreadRadius: 0,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Sign Up",
-                                style: login
-                                    ? Theme.of(context).textTheme.headline2
-                                    : TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Theme.of(context)
-                                            .textTheme
-                                            .headline2!
-                                            .fontSize,
-                                        fontWeight: Theme.of(context)
-                                            .textTheme
-                                            .headline2!
-                                            .fontWeight,
-                                      ),
-                              ),
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: !login
+                                  ? primaryColor
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .headline1!
+                                      .color,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    Container(
-                      height: login ? 200 : 250,
-                      margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardTheme.color,
-                        border:
-                            Border.all(color: Theme.of(context).primaryColor),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).cardTheme.shadowColor!,
-                            spreadRadius: 0,
-                            blurRadius: 10,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardTheme.color,
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor, width: 2),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CustomeTextField(
-                            controller: _emailController,
-                            label: "Email",
-                            hinttext: "Enter Email Address",
-                          ),
-                          CustomeTextField(
-                              controller: _passwordController,
-                              label: "Password",
-                              hinttext: "Enter Password"),
-                          login == false
-                              ? CustomeTextField(
-                                  controller: _conformPassword,
-                                  label: "Confirm Password",
-                                  hinttext: "Re-Enter Password",
-                                )
-                              : Text(""),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: login
-                                ? CustomeOutlineButton(
-                                    title: "Login",
-                                    tap: () async {
-                                      bool log = await auth!.login(
-                                          _emailController.text,
-                                          _passwordController.text);
-                                      if (log) {
-                                        customeSnackBar(
-                                            context, "Successfully loggedIn");
-                                      } else {
-                                        customeSnackBar(
-                                            context, "Unable to LogIn");
-                                      }
-                                    },
-                                  )
-                                : CustomeOutlineButton(
-                                    title: "SignUp",
-                                    tap: () async {
-                                      bool log = await auth!.signIn(
-                                          _emailController.text,
-                                          _passwordController.text);
-                                      if (log) {
-                                        customeSnackBar(
-                                            context, "Successfully SignedIn");
-                                      } else {
-                                        customeSnackBar(context,
-                                            "Unable to SigniIn try with diffrent mail id");
-                                      }
-                                    },
-                                  ),
-                          ),
-                        ],
-                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).cardTheme.shadowColor!,
+                          spreadRadius: 0,
+                          blurRadius: 10,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CustomeTextField(
+                          controller: _emailController,
+                          label: "Email",
+                          hinttext: "Enter Email Address",
+                        ),
+                        CustomeTextField(
+                            controller: _passwordController,
+                            label: "Password",
+                            hinttext: "Enter Password"),
+                        login == false
+                            ? CustomeTextField(
+                                controller: _conformPassword,
+                                label: "Confirm Password",
+                                hinttext: "Re-Enter Password",
+                              )
+                            : Text(""),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: login
+                              ? CustomeOutlineButton(
+                                  title: "Login",
+                                  tap: () async {
+                                    bool log = await auth!.login(
+                                        _emailController.text,
+                                        _passwordController.text);
+                                    if (log) {
+                                      customeSnackBar(
+                                          context, "Successfully loggedIn");
+                                    } else {
+                                      customeSnackBar(
+                                          context, "Unable to LogIn");
+                                    }
+                                  },
+                                )
+                              : CustomeOutlineButton(
+                                  title: "SignUp",
+                                  tap: () async {
+                                    bool log = await auth!.signIn(
+                                        _emailController.text,
+                                        _passwordController.text);
+                                    if (log) {
+                                      customeSnackBar(
+                                          context, "Successfully SignedIn");
+                                    } else {
+                                      customeSnackBar(context,
+                                          "Unable to SigniIn try with diffrent mail id");
+                                    }
+                                  },
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               Text(
                 "OR",
@@ -287,7 +272,7 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
+                      primary: Theme.of(context).backgroundColor,
                     ),
                     onPressed: () {
                       auth!.googleSignin();
