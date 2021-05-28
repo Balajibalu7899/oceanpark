@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ocean_park/global/texts/light_container_properties.dart';
+import 'package:ocean_park/models/order/order_product.dart';
 
 class OrderedProductCard extends StatelessWidget {
+  final OrderProduct product;
+
+  const OrderedProductCard({Key? key, required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +22,8 @@ class OrderedProductCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
                   image: NetworkImage(
-                    "https://us.123rf.com/450wm/karandaev/karandaev1608/karandaev160800306/62201911-vegetables-fish-meat-and-ingredients-for-cooking-tomatoes-pepper-corn-beef-eggs-top-view-with-copy-s.jpg?ver=6",
+                    product.image ??
+                        "https://us.123rf.com/450wm/karandaev/karandaev1608/karandaev160800306/62201911-vegetables-fish-meat-and-ingredients-for-cooking-tomatoes-pepper-corn-beef-eggs-top-view-with-copy-s.jpg?ver=6",
                   ),
                   fit: BoxFit.cover),
             ),
@@ -32,19 +37,20 @@ class OrderedProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Basa (Pangas) - Boneless",
+                  "${product.title}",
                   maxLines: 2,
                   style: Theme.of(context).textTheme.headline2,
                 ),
+                SizedBox(height: 30),
                 Text(
-                  "Weight: 1 Kg",
+                  "Weight: ${product.weight}${product.unitType}",
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  "Price: 250",
+                  "Price: ₹${product.price}",
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.headline3,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
             ),

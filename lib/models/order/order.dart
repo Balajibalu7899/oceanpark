@@ -1,25 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ocean_park/models/order/payment_method.dart';
+import 'package:ocean_park/models/payment/payment.dart';
+
 import 'address.dart';
 import 'order_product.dart';
 import 'OrdereState.dart';
 
 class Order {
+  String? id;
   String? customerId;
   String? outlet;
-  String? payment;
-  int? time;
-  String? expectedTime;
+  Timestamp? time;
+  Timestamp? expectedTime;
   String? status;
   int? itemsCount;
-  double? totalPrice;
+  double? price;
   double? discount;
+  double? totalPrice;
   String? couponCode;
+  double? couponAmount;
   Address? address;
   OrdereState? ordered;
   OrdereState? dispatched;
   OrdereState? delivered;
+  OrdereState? cancelled;
+  PaymentMethod? payment;
   List<OrderProduct>? products;
 
   Order({
+    this.id,
     this.customerId,
     this.outlet,
     this.payment,
@@ -27,40 +36,59 @@ class Order {
     this.expectedTime,
     this.status,
     this.itemsCount,
-    this.totalPrice,
+    this.price,
     this.discount,
+    this.totalPrice,
     this.couponCode,
+    this.couponAmount,
     this.address,
     this.ordered,
     this.dispatched,
     this.delivered,
+    this.cancelled,
     this.products,
   });
 
-  factory Order.fromJson(Map<String, dynamic> json) {
+  factory Order.fromDoc(DocumentSnapshot doc) {
     return Order(
-      customerId: json['customer_id'] as String?,
-      outlet: json['outlet'] as String?,
-      payment: json['payment'] as String?,
-      time: json['time'] as int?,
-      expectedTime: json['expected_time'] as String?,
-      status: json['status'] as String?,
-      itemsCount: json['items_count'] as int?,
-      totalPrice: json['price'] as double?,
-      discount: json['discount'] as double?,
-      couponCode: json['coupon_code'] as String?,
-      address: json['address'] == null
+      id: doc.id,
+      customerId: doc.data()!['customer_id'] as String?,
+      outlet: doc.data()!['outlet'] as String?,
+      time: doc.data()!['time'] as Timestamp?,
+      expectedTime: doc.data()!['expected_time'] as Timestamp?,
+      status: doc.data()!['status'] as String?,
+      itemsCount: doc.data()!['items_count'] as int?,
+      price: doc.data()!['price'].toDouble() as double?,
+      discount: doc.data()!['discount'].toDouble() as double?,
+      totalPrice: doc.data()!['total_price'].toDouble() as double?,
+      couponCode: doc.data()!['coupon_code'] as String?,
+      couponAmount: doc.data()!['coupon_amount'] != null
+          ? doc.data()!['coupon_amount'].toDouble() as double?
+          : null,
+      address: doc.data()!['address'] == null
           ? null
-          : Address.fromJson(json['address'] as Map<String, dynamic>),
-      ordered: json['ordered'] == null
+          : Address.fromJson(doc.data()!['address'] as Map<String, dynamic>),
+      ordered: doc.data()!['ordered'] == null
           ? null
-          : OrdereState.fromJson(json['ordered'] as Map<String, dynamic>),
-      dispatched: json['dispatched'] == null
+          : OrdereState.fromJson(
+              doc.data()!['ordered'] as Map<String, dynamic>),
+      dispatched: doc.data()!['dispatched'] == null
           ? null
-          : OrdereState.fromJson(json['dispatched'] as Map<String, dynamic>),
-      delivered: json['delivered'] == null
+          : OrdereState.fromJson(
+              doc.data()!['dispatched'] as Map<String, dynamic>),
+      delivered: doc.data()!['delivered'] == null
           ? null
-          : OrdereState.fromJson(json['delivered'] as Map<String, dynamic>),
+          : OrdereState.fromJson(
+              doc.data()!['delivered'] as Map<String, dynamic>),
+      cancelled: doc.data()!['cancelled'] == null
+          ? null
+          : OrdereState.fromJson(
+              doc.data()!['cancelled'] as Map<String, dynamic>),
+      payment: doc.data()!['payment'] == null
+          ? null
+          : PaymentMethod.fromJson(
+              doc.data()!['payment'] as Map<String, dynamic>),
+      products: <OrderProduct>[],
     );
   }
 
@@ -68,18 +96,18 @@ class Order {
     return {
       'customer_id': customerId,
       'outlet': outlet,
-      'payment': payment,
       'time': time,
-      'expected_time': expectedTime,
+      if (expectedTime != null) 'expected_time': expectedTime,
       'status': status,
       'items_count': itemsCount,
-      'price': totalPrice,
+      'price': price,
       'discount': discount,
-      'coupon_code': couponCode,
+      'total_price': totalPrice,
+      if (couponCode != null) 'coupon_code': couponCode,
+      if (couponAmount != null) 'coupon_amount': couponAmount,
       'address': address?.toJson(),
       'ordered': ordered?.toJson(),
-      'dispatched': dispatched?.toJson(),
-      'delivered': delivered?.toJson(),
+      'payment': payment!.toJson(),
     };
   }
 }

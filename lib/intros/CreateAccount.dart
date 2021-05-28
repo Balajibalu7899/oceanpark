@@ -20,21 +20,13 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   TextEditingController _nameController = TextEditingController();
-
   TextEditingController _phoneController = TextEditingController();
-
   TextEditingController _emailController = TextEditingController();
-
   TextEditingController _addressController = TextEditingController();
-
   TextEditingController _localityController = TextEditingController();
-
   TextEditingController _cityController = TextEditingController();
-
   TextEditingController _stateController = TextEditingController();
-
   TextEditingController _pincodeController = TextEditingController();
-
   CustomeLocation? location;
 
   String? profileImage;
@@ -60,7 +52,7 @@ class _CreateAccountState extends State<CreateAccount> {
       ],
     );
     bool log = await Provider.of<CustomerService>(context, listen: false)
-        .addCustomer(customer);
+        .create(customer);
     if (log) {
       customeSnackBar(context, "user added");
       Navigator.of(context).push(MaterialPageRoute(builder: (context) {

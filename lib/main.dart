@@ -6,9 +6,13 @@ import 'package:ocean_park/intros/LoginPage.dart';
 import 'package:ocean_park/intros/Splash.dart';
 import 'package:ocean_park/pages/main/HomeMain.dart';
 import 'package:ocean_park/services/cart_service.dart';
+import 'package:ocean_park/services/category_service.dart';
+import 'package:ocean_park/services/coupon_service.dart';
 import 'package:ocean_park/services/custome_service.dart';
 import 'package:ocean_park/services/auth_service.dart';
+import 'package:ocean_park/services/offer_service.dart';
 import 'package:ocean_park/services/order_service.dart';
+import 'package:ocean_park/services/page_nav_service.dart';
 import 'package:ocean_park/services/products_service.dart';
 import 'package:provider/provider.dart';
 
@@ -25,13 +29,25 @@ void main() {
                 create: (_) => CustomerService(),
               ),
               ChangeNotifierProvider(
+                create: (_) => PageNavService(),
+              ),
+              ChangeNotifierProvider(
                 create: (_) => ProductService(),
               ),
               ChangeNotifierProvider(
                 create: (_) => CartService(),
               ),
               ChangeNotifierProvider(
+                create: (_) => CategoryService(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => CouponService(),
+              ),
+              ChangeNotifierProvider(
                 create: (_) => OrderService(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => OfferService(),
               ),
             ],
             child: MyApp(),

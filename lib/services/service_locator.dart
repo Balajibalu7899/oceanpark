@@ -7,4 +7,5 @@ final locator = GetIt.instance;
 void startUp() {
   locator.registerLazySingleton(() => AuthService.instance());
   locator.registerLazySingleton(() => CustomerService());
+  locator.registerLazySingleton(() => CustomerService());
 }

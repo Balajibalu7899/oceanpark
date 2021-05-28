@@ -1,32 +1,56 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ocean_park/global/colors/light_colors.dart';
 
-final lighttexttheme = TextTheme(
+final lightTextTheme = TextTheme(
   headline1: TextStyle(
-    color: Color.fromRGBO(1, 1, 87, 1),
     fontSize: 22,
+    color: primaryTextColor,
     fontWeight: FontWeight.bold,
   ),
   headline2: TextStyle(
-    color: Color.fromRGBO(1, 1, 87, 1),
     fontSize: 18,
+    color: primaryTextColor,
     fontWeight: FontWeight.bold,
   ),
   headline3: TextStyle(
-    color: Color.fromRGBO(95, 94, 108, 1),
-    fontSize: 16,
+    fontSize: 22,
+    color: secondaryTextColor,
+    fontWeight: FontWeight.bold,
   ),
   headline4: TextStyle(
-    color: Color.fromRGBO(95, 94, 108, 1),
-    fontSize: 14,
+    fontSize: 20,
+    color: secondaryTextColor,
+    fontWeight: FontWeight.bold,
+  ),
+  headline5: TextStyle(
+    fontSize: 16,
+    color: primaryTextColor,
+    fontWeight: FontWeight.bold,
+  ),
+  headline6: TextStyle(
+    fontSize: 16,
+    color: secondaryTextColor,
+    fontWeight: FontWeight.bold,
   ),
   subtitle1: TextStyle(
-    color: Color.fromRGBO(135, 134, 147, 1),
-    fontSize: 12,
+    fontSize: 18,
+    color: secondaryTextColor,
+    fontWeight: FontWeight.w600,
   ),
   subtitle2: TextStyle(
-    color: Color.fromRGBO(1, 1, 87, 1),
-    fontSize: 10,
-    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    color: secondaryTextColor,
+    fontWeight: FontWeight.w600,
+  ),
+  bodyText1: TextStyle(
+    fontSize: 16,
+    color: terTextColor,
+    fontWeight: FontWeight.w500,
+  ),
+  bodyText2: TextStyle(
+    fontSize: 14,
+    color: terTextColor,
+    fontWeight: FontWeight.w500,
   ),
 );

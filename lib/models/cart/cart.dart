@@ -1,4 +1,4 @@
-class Cart {
+class CartProduct {
   String? productId;
   String? image;
   String? title;
@@ -10,7 +10,7 @@ class Cart {
   int? quantity;
   String? cut;
 
-  Cart({
+  CartProduct({
     this.productId,
     this.image,
     this.title,
@@ -23,15 +23,15 @@ class Cart {
     this.cut,
   });
 
-  factory Cart.fromJson(Map<String, dynamic> json) {
-    return Cart(
+  factory CartProduct.fromJson(Map<String, dynamic> json) {
+    return CartProduct(
       productId: json['product_id'] as String?,
       image: json['image'] as String?,
       title: json['title'] as String?,
       subTitle: json['sub_title'] as String?,
-      price: json['price'] as double?,
-      offerPrice: json['offer_price'] as double?,
-      weight: json['weight'] as double?,
+      price: json['price'].toDouble() as double?,
+      offerPrice: json['offer_price'].toDouble() as double?,
+      weight: json['weight'].toDouble() as double?,
       unitType: json['unit_type'] as String?,
       quantity: json['quantity'] as int?,
       cut: json['cut'] as String?,

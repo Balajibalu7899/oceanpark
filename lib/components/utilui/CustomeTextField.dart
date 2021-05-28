@@ -12,26 +12,27 @@ class CustomeTextField extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: 45,
-        child: Material(
-          elevation: 2,
-          borderRadius: BorderRadius.circular(10),
-          shadowColor: Theme.of(context).cardTheme.shadowColor,
-          child: TextFormField(
-            controller: controller,
-            style: Theme.of(context).textTheme.headline4,
-            decoration: InputDecoration(
-              hintText: hinttext,
-              labelText: label,
-              labelStyle: Theme.of(context).inputDecorationTheme.labelStyle,
-              contentPadding:
-                  Theme.of(context).inputDecorationTheme.contentPadding,
-              border: InputBorder.none,
-            ),
+    return Container(
+      margin: const EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black38,
+            blurRadius: 25,
+            offset: const Offset(0, 10),
           ),
+        ],
+      ),
+      child: TextFormField(
+        controller: controller,
+        style: Theme.of(context).textTheme.headline4,
+        decoration: InputDecoration(
+          hintText: hinttext,
+          labelText: label,
+          labelStyle: Theme.of(context).inputDecorationTheme.labelStyle,
+          contentPadding: Theme.of(context).inputDecorationTheme.contentPadding,
+          border: InputBorder.none,
         ),
       ),
     );

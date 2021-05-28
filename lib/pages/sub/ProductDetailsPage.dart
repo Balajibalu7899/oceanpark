@@ -1,30 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/cards/ProductCard.dart';
-import 'package:ocean_park/components/utilui/CustomeQuantitySelector.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/models/cart/cart.dart';
-import 'package:ocean_park/models/product/product.dart';
-import 'package:ocean_park/services/cart_service.dart';
-import 'package:ocean_park/services/products_service.dart';
 import 'package:provider/provider.dart';
+import 'package:ocean_park/models/product/product.dart';
+import 'package:ocean_park/services/products_service.dart';
+import 'package:ocean_park/components/cards/ProductCard.dart';
+import 'package:ocean_park/components/utilui/cart_button.dart';
+import 'package:ocean_park/global/texts/light_container_properties.dart';
 
-class ProductDetailsPage extends StatefulWidget {
+class ProductDetailsPage extends StatelessWidget {
   final Product product;
-  ProductDetailsPage({required this.product, Key? key}) : super(key: key);
-  @override
-  _ProductDetailsPageState createState() => _ProductDetailsPageState();
-}
+  const ProductDetailsPage({required this.product, Key? key}) : super(key: key);
 
-class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  bool? inCart = false;
-  @override
-  void initState() {
-    inCart = Provider.of<CartService>(context, listen: false)
-        .inCart(widget.product.productId!);
-    super.initState();
-  }
-
-  int? prize;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,18 +17,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         clipBehavior: Clip.none,
         child: Row(
           children: [
-            SizedBox(
-              width: 10,
-            ),
+            SizedBox(width: 10),
             Text(
-              "₹${widget.product.price}",
+              "₹${product.offerPrice}",
               style: Theme.of(context).textTheme.headline1,
             ),
-            SizedBox(
-              width: 10,
-            ),
+            SizedBox(width: 10),
             Text(
-              "₹${(widget.product.price! + 20.0)}",
+              "₹${(product.price!)}",
               style: TextStyle(
                 fontSize: Theme.of(context).textTheme.headline3!.fontSize,
                 fontWeight: FontWeight.bold,
@@ -52,11 +33,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 decorationThickness: 3.0,
               ),
             ),
-            SizedBox(
-              width: 10,
-            ),
+            SizedBox(width: 10),
             Text(
-              "20% off",
+              "${product.discount!.toStringAsFixed(1)}% off",
               style: TextStyle(
                 fontSize: Theme.of(context).textTheme.headline1!.fontSize,
                 fontWeight: Theme.of(context).textTheme.headline1!.fontWeight,
@@ -64,38 +43,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               ),
             ),
             Spacer(),
-            inCart!
-                ? CustomeQuantitySelector(
-                    productId: widget.product.productId,
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      child: Text(
-                        "Add to Cart",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
-                      ),
-                      onPressed: () async {
-                        Cart cart = Cart(
-                          productId: widget.product.productId,
-                          price: widget.product.price,
-                          // units: 1,
-                        );
-                        await Provider.of<CartService>(context, listen: false)
-                            .addtoCart(cart);
-                        inCart =
-                            Provider.of<CartService>(context, listen: false)
-                                .inCart(widget.product.productId!);
-                        setState(() {});
-                      },
-                    ),
-                  ),
+            CartButton(product: product),
           ],
         ),
       ),
@@ -114,16 +62,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(
-                            widget.product.image ??
+                            product.image ??
                                 "https://us.123rf.com/450wm/karandaev/karandaev1608/karandaev160800306/62201911-vegetables-fish-meat-and-ingredients-for-cooking-tomatoes-pepper-corn-beef-eggs-top-view-with-copy-s.jpg?ver=6",
                           ),
                           fit: BoxFit.cover),
                     ),
                   ),
                   Positioned(
-                    bottom: 10,
-                    right: 4,
-                    left: 4,
+                    top: 275,
+                    right: 0,
+                    left: 0,
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       margin: Theme.of(context).cardTheme.margin,
@@ -133,21 +81,21 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.product.title ?? " ",
-                            maxLines: 1,
+                            product.title ?? " ",
+                            maxLines: 2,
                             style: Theme.of(context).textTheme.headline1,
                           ),
                           SizedBox(height: 5),
                           Text(
                             "Fresh Out | Best Quality",
                             maxLines: 1,
-                            style: Theme.of(context).textTheme.headline2,
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                           SizedBox(height: 5),
                           Text(
-                            widget.product.description!,
+                            product.description!,
                             maxLines: 3,
-                            style: Theme.of(context).textTheme.headline3,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ],
                       ),
@@ -156,118 +104,83 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 ],
               ),
             ),
+            if (product.specials != null)
+              SizedBox(
+                height: 100,
+                child: ListView.builder(
+                    itemCount: product.specials!.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width - 100,
+                        padding: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(5),
+                        decoration: containerdecoration,
+                        child: Row(
+                          children: [
+                            Image(
+                              image:
+                                  NetworkImage(product.specials![index].image!),
+                              fit: BoxFit.cover,
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product.specials![index].title!,
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    product.specials![index].subTitle!,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+              ),
             Container(
-              height: 120,
+              padding: EdgeInsets.all(10),
               margin: Theme.of(context).cardTheme.margin,
-              width: MediaQuery.of(context).size.width,
               decoration: containerdecoration,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Container(
-                        height: 30,
-                        margin: EdgeInsets.all(5),
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).textTheme.headline1!.color,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.elevator_rounded,
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                        ),
+                      Icon(
+                        Icons.album,
+                        color: Theme.of(context).textTheme.headline1!.color,
                       ),
+                      SizedBox(width: 5),
                       Text(
-                        "Net Weight:${widget.product.weight} ${widget.product.unitType}",
-                        style: Theme.of(context).textTheme.headline3,
+                        "Delivery",
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.headline1,
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 30,
-                        margin: EdgeInsets.all(5),
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).textTheme.headline1!.color,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.elevator_rounded,
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                      ),
-                      Text(
-                        "Cut: Fresh cut",
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 30,
-                        margin: EdgeInsets.all(5),
-                        padding: EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).textTheme.headline1!.color,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.elevator_rounded,
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                      ),
-                      Text(
-                        "Quality: Best Quality",
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: 120,
-              margin: Theme.of(context).cardTheme.margin,
-              decoration: containerdecoration,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.album,
-                          color: Theme.of(context).textTheme.headline1!.color,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Delivery",
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.headline2,
-                        ),
-                      ),
-                    ],
-                  ),
+                  SizedBox(height: 5),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        right: 8, left: 8, bottom: 8, top: 2),
+                    padding: const EdgeInsets.only(left: 30),
                     child: Text(
-                      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna",
+                      "Fastest Delivery \nmeat",
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   ),
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment(-0.9, 1),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
               child: Text(
                 "Similiar",
                 style: Theme.of(context).textTheme.headline1,

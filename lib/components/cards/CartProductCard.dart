@@ -4,7 +4,7 @@ import 'package:ocean_park/global/texts/light_container_properties.dart';
 import 'package:ocean_park/models/cart/cart.dart';
 
 class CardProductCard extends StatelessWidget {
-  final Cart cart;
+  final CartProduct cart;
   CardProductCard({required this.cart, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class CardProductCard extends StatelessWidget {
                   cart.image ??
                       "https://us.123rf.com/450wm/karandaev/karandaev1608/karandaev160800306/62201911-vegetables-fish-meat-and-ingredients-for-cooking-tomatoes-pepper-corn-beef-eggs-top-view-with-copy-s.jpg?ver=6",
                 ),
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),
@@ -44,8 +44,11 @@ class CardProductCard extends StatelessWidget {
                   maxLines: 1,
                   style: Theme.of(context).textTheme.headline1,
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 Text(
-                  "Cut: Curry Cut",
+                  "Cut: ${cart.cut}",
                   maxLines: 1,
                   style: Theme.of(context).textTheme.headline2,
                 ),
@@ -53,7 +56,7 @@ class CardProductCard extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  "Price: ₹2599/ 1Kg",
+                  "Price: ₹${cart.offerPrice}/ ${cart.weight}${cart.unitType}",
                   maxLines: 1,
                   style: TextStyle(
                     fontSize: Theme.of(context).textTheme.headline3!.fontSize,
@@ -64,7 +67,7 @@ class CardProductCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Total: ₹2599",
+                      "Total: ₹${cart.offerPrice! * cart.quantity!}",
                       maxLines: 1,
                       style: TextStyle(
                         fontSize:

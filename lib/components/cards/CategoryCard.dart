@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ocean_park/global/texts/light_container_properties.dart';
+import 'package:ocean_park/models/category/category.dart';
 
 class CategoryCard extends StatelessWidget {
+  final Category category;
+
+  const CategoryCard({Key? key, required this.category}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,16 +20,16 @@ class CategoryCard extends StatelessWidget {
             height: 150,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(
+                image: NetworkImage(category.image ??
                     "https://us.123rf.com/450wm/karandaev/karandaev1608/karandaev160800306/62201911-vegetables-fish-meat-and-ingredients-for-cooking-tomatoes-pepper-corn-beef-eggs-top-view-with-copy-s.jpg?ver=6"),
                 fit: BoxFit.fill,
               ),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
             ),
           ),
           Spacer(),
           Text(
-            "Fresh Cut",
+            category.title!,
             style: Theme.of(context).textTheme.headline2,
           ),
         ],

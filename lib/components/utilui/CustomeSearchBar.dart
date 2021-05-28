@@ -28,8 +28,8 @@ class CustomeSearchBar extends StatelessWidget {
                 ),
                 color: Theme.of(context).textTheme.headline1!.color,
                 onPressed: () {
-                  Provider.of<ProductService>(context)
-                      .searchProduct(controller.text);
+                  // Provider.of<ProductService>(context)
+                  //     .searchProduct(controller.text);
                 },
               ),
               contentPadding:

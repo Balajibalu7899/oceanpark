@@ -1,22 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ocean_park/components/utilui/CustomeTextField.dart';
 import 'package:ocean_park/global/texts/light_container_properties.dart';
+import 'package:ocean_park/models/order/order.dart';
+import 'package:ocean_park/models/order/payment_method.dart';
+import 'package:ocean_park/services/cart_service.dart';
+import 'package:ocean_park/services/order_service.dart';
+import 'package:provider/provider.dart';
 
-class PaymentsPage extends StatelessWidget {
-  TextEditingController _cardnumber = TextEditingController();
-  TextEditingController _expiredate = TextEditingController();
-  TextEditingController _cvv = TextEditingController();
+class PaymentsPage extends StatefulWidget {
+  @override
+  _PaymentsPageState createState() => _PaymentsPageState();
+}
+
+class _PaymentsPageState extends State<PaymentsPage> {
+  String? method;
+  PaymentMethod? paymentMethod;
+
+  placeOrder(BuildContext context) async {
+    await Provider.of<OrderService>(context, listen: false).placeOrder();
+    await Provider.of<CartService>(context, listen: false).clearCart();
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _cardnumber = TextEditingController();
+    TextEditingController _expiredate = TextEditingController();
+    TextEditingController _cvv = TextEditingController();
+
+    final _order = Provider.of<OrderService>(context).order;
+
     return Scaffold(
-        body: SafeArea(
-      child: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          SizedBox(
-            height: 20,
-          ),
+      body: Column(
+        children: [
+          SizedBox(height: 20),
           Row(
             children: [
               SizedBox(
@@ -28,118 +46,197 @@ class PaymentsPage extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                '₹ 2500',
+                '₹${_order.totalPrice}',
                 style: Theme.of(context).textTheme.headline1,
               ),
             ],
           ),
-          Container(
-            margin: Theme.of(context).cardTheme.margin,
-            decoration: containerdecoration,
-            child: ExpansionTile(
-              title: Text(
-                'UPI Payment',
-                style: Theme.of(context).textTheme.headline2,
+          SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              setState(() {
+                method = "UPI";
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.all(10),
+              margin: Theme.of(context).cardTheme.margin,
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                border: method == "UPI"
+                    ? Border.all(
+                        width: 2,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Border(),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: containerdecoration.boxShadow,
               ),
-              children: <Widget>[
-                ListTile(title: Text('Title of the item')),
-                ListTile(
-                  title: Text('Title of the item2'),
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: Theme.of(context).cardTheme.margin,
-            decoration: containerdecoration,
-            child: ExpansionTile(
-              title: Text(
-                'Net Banking',
-                style: Theme.of(context).textTheme.headline2,
-              ),
-              children: <Widget>[
-                ListTile(title: Text('Title of the item')),
-                ListTile(
-                  title: Text('Title of the item2'),
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: Theme.of(context).cardTheme.margin,
-            decoration: containerdecoration,
-            child: ExpansionTile(
-              title: Text(
-                'Debit Card',
-                style: Theme.of(context).textTheme.headline2,
-              ),
-              children: <Widget>[
-                CustomeTextField(
-                  controller: _cardnumber,
-                  label: "Card Number",
-                  hinttext: "Enter Your Card Number",
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: (MediaQuery.of(context).size.width / 2) - 40,
-                      child: CustomeTextField(
-                        controller: _expiredate,
-                        label: "Expire Date",
-                        hinttext: "Month | Year",
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'UPI Payment',
+                        style: Theme.of(context).textTheme.headline2,
                       ),
-                    ),
-                    SizedBox(
-                      width: (MediaQuery.of(context).size.width / 2) - 40,
-                      child: CustomeTextField(
-                        controller: _cvv,
-                        label: "CVV",
-                        hinttext: "Enter the CVV",
-                      ),
-                    ),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      child: Text(
-                        "Continue",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
-                      ),
-                      onPressed: () {},
-                    ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: Theme.of(context).cardTheme.margin,
-            decoration: containerdecoration,
-            child: ExpansionTile(
-              title: Text(
-                'Credit Card',
-                style: Theme.of(context).textTheme.headline2,
+                  if (method == "UPI")
+                    Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Text(
+                          'Not Avilable Due to RBI New Regulations',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      ],
+                    )
+                ],
               ),
-              children: <Widget>[
-                ListTile(title: Text('Title of the item')),
-                ListTile(
-                  title: Text('Title of the item2'),
-                )
-              ],
             ),
           ),
+          InkWell(
+            onTap: () {
+              setState(() {
+                method = "CC/DC";
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.all(10),
+              margin: Theme.of(context).cardTheme.margin,
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                border: method == "CC/DC"
+                    ? Border.all(
+                        width: 2,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Border(),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: containerdecoration.boxShadow,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Credit Card/Debit Card',
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                    ],
+                  ),
+                  if (method == "CC/DC")
+                    Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Text(
+                          'Not Avilable Due to RBI New Regulations',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      ],
+                    )
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Provider.of<OrderService>(context, listen: false).addPayment(
+                PaymentMethod(
+                    method: "Cash On Delivery", time: Timestamp.now()),
+              );
+              setState(() {
+                method = "COD";
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.all(10),
+              margin: Theme.of(context).cardTheme.margin,
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                border: method == "COD"
+                    ? Border.all(
+                        width: 2,
+                        color: Theme.of(context).primaryColor,
+                      )
+                    : Border(),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: containerdecoration.boxShadow,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Cash On Delivery',
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                    ],
+                  ),
+                  if (method == "COD")
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 5),
+                          Text(
+                            'Pay On Delivery',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            'Your Can Pay With Cash/Card/UPI',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 5),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                try {
+                                  await Provider.of<OrderService>(context,
+                                          listen: false)
+                                      .placeOrder();
+                                  await Provider.of<CartService>(context,
+                                          listen: false)
+                                      .clearCart();
+                                  await Provider.of<OrderService>(context,
+                                          listen: false)
+                                      .getOrders();
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                } catch (err) {
+                                  print(err);
+                                }
+                              },
+                              child: Text(
+                                'Place Order',
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                ],
+              ),
+            ),
+          ),
+          Spacer(),
+          Center(
+            child: Text(
+              'Secure Payment',
+              style: Theme.of(context).textTheme.headline2,
+            ),
+          ),
+          SizedBox(height: 50)
         ],
       ),
-    ));
+    );
   }
 }

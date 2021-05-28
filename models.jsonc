@@ -35,16 +35,9 @@
 	},
 
 	{	
-		"__className": "Cart",
-		"product_id": "12SSD12ASD12",
-		"image": "this",
-		"title": "12SSD12ASD12",
-		"sub_title": "2012-04-23T18:25:43.511Z",
-		"price": 12.23,
-		"offer_price": 2.23,
-		"weight": 0.5,
-		"unit_type": "Kg",
-		"quantity": 1,
-		"cut": "Medium Cut"
+		"__className": "Category",
+		"image": "this is good",
+		"title": "this is Category",
+		"slug": "this is good"
 	}
 ]

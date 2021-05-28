@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ocean_park/components/cards/OrderProductCard.dart';
 import 'package:ocean_park/components/utilui/CustomeDottedLine.dart';
 import 'package:ocean_park/components/utilui/CustomeSlider.dart';
 import 'package:ocean_park/global/texts/light_container_properties.dart';
+import 'package:ocean_park/models/order/order.dart';
 import 'package:ocean_park/pages/sub/OrderDetailsPage.dart';
 
 class OrdersCard extends StatefulWidget {
+  final Order order;
+
+  const OrdersCard({Key? key, required this.order}) : super(key: key);
   @override
   _OrdersCardState createState() => _OrdersCardState();
 }
@@ -22,29 +27,38 @@ class _OrdersCardState extends State<OrdersCard> {
       },
       child: AnimatedContainer(
         duration: Duration(seconds: 1),
-        height: taped == false ? 230 : 280,
+        height: taped == false ? 210 : 315,
         margin: Theme.of(context).cardTheme.margin,
+        padding: EdgeInsets.all(10),
         decoration: containerdecoration,
         child: Column(
           children: [
             Row(
               children: [
+                Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).textTheme.headline1!.color,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Icon(
+                    Icons.shopping_cart,
+                    color: Theme.of(context).backgroundColor,
+                  ),
+                ),
+                SizedBox(width: 5),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Ordered",
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
+                    Text(
+                      "Ordered",
+                      style: Theme.of(context).textTheme.headline2,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        "On Thu, 21 May 2020",
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
+                    SizedBox(height: 5),
+                    Text(
+                      "${DateFormat('HH:mm a | MMMM d EE').format(widget.order.time!.toDate())}",
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ],
                 ),
@@ -52,24 +66,25 @@ class _OrdersCardState extends State<OrdersCard> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "₹2754",
+                    "₹${widget.order.totalPrice}",
                     style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
               ],
             ),
+            SizedBox(height: 5),
             InkWell(
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
-                      return OrderDetailsPage();
+                      return OrderDetailsPage(order: widget.order);
                     },
                   ),
                 );
               },
               child: Container(
-                height: 120,
+                height: 130,
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.only(left: 45, right: 5),
                 decoration: BoxDecoration(
@@ -78,26 +93,16 @@ class _OrdersCardState extends State<OrdersCard> {
                 ),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 5,
+                  itemCount: widget.order.products!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return OrderProductCard();
+                    return OrderProductCard(
+                      product: widget.order.products![index],
+                    );
                   },
                 ),
               ),
             ),
-            taped
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DottedLine(
-                      lineLength: 300,
-                      lineThickness: 1.5,
-                      dashLength: 8.0,
-                      dashColor: Colors.black,
-                      dashGapLength: 8.0,
-                    ),
-                  )
-                : Text(" "),
-            taped ? CustomeSlider(state: "cancelled") : Text(" "),
+            if (taped) CustomeSlider(order: widget.order),
           ],
         ),
       ),

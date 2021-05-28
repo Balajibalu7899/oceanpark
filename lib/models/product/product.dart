@@ -10,17 +10,17 @@ class Product {
   String? title;
   String? subTitle;
   String? description;
-  List<String>? type;
   double? price;
   double? offerPrice;
   double? discount;
   double? weight;
   String? unitType;
   String? badge;
+  List<String>? categories;
   List<String>? tags;
   List<Cut>? cuts;
   Delivery? delivery;
-  Specials? specials;
+  List<Specials>? specials;
   List<String>? outlets;
 
   Product({
@@ -29,7 +29,7 @@ class Product {
     this.title,
     this.subTitle,
     this.description,
-    this.type,
+    this.categories,
     this.price,
     this.offerPrice,
     this.discount,
@@ -59,7 +59,7 @@ class Product {
         badge: doc.data()!['badge'] as String?,
         weight: doc.data()!['weight'] as double?,
         unitType: doc.data()!['unit_type'] as String,
-        type: doc.data()!['categories'] == null
+        categories: doc.data()!['categories'] == null
             ? null
             : List<String>.from(doc.data()!['categories']),
         cuts: doc.data()!['cuts'] == null
@@ -71,6 +71,11 @@ class Product {
             ? null
             : Delivery.fromJson(
                 doc.data()!['delivery'] as Map<String, dynamic>),
+        specials: doc.data()!['specials'] == null
+            ? null
+            : (doc.data()!['specials'] as List<dynamic>?)
+                ?.map((e) => Specials.fromJson(e as Map<String, dynamic>))
+                .toList(),
         outlets: doc.data()!['outlets'] as List<String>?,
       );
     } catch (err) {

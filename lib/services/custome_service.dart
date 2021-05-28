@@ -11,14 +11,14 @@ class CustomerService extends ChangeNotifier {
   Customer? _customer;
   User? user = FirebaseAuth.instance.currentUser;
   CollectionReference _reference =
-      FirebaseFirestore.instance.collection("customers");
+      FirebaseFirestore.instance.collection("Customers");
   Customer get customer => _customer!;
 
   CustomerService() {
     getCustomer();
   }
 
-  Future<bool> addCustomer(Customer customer) async {
+  Future<bool> create(Customer customer) async {
     try {
       await _reference.doc(user?.uid).set(customer.toJson());
       AuthService.instance().setNewUser(false);

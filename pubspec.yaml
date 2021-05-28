@@ -1,18 +1,19 @@
 name: ocean_park
 description: Ocean Park An Fish Ordering App
 
-publish_to: 'none' 
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # pay: ^1.0.1
+  intl: ^0.17.0
   http: ^0.13.3
   get_it: ^7.0.0
   location: ^4.1.1
@@ -26,22 +27,23 @@ dependencies:
   firebase_storage: ^8.0.5
   shared_preferences: ^2.0.5
 
-
-
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: ^0.9.0
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logos/Ocean_Park.png"
 
 flutter:
-
-
   uses-material-design: true
 
   assets:
+    - assets/logos/Ocean_Park.png
     - assets/images/login.png
     - assets/images/google.jpg
     - assets/images/photo.png
-    

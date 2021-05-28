@@ -62,6 +62,9 @@ class _LoginPageState extends State<LoginPage> {
                                 vertical: 15,
                               ),
                             ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Theme.of(context).backgroundColor,
+                            ),
                             shape: MaterialStateProperty.all<OutlinedBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
@@ -71,7 +74,9 @@ class _LoginPageState extends State<LoginPage> {
                                   bottomRight: Radius.circular(0),
                                 ),
                                 side: BorderSide(
-                                  color: login ? primaryColor : backgroundColor,
+                                  color: login
+                                      ? primaryColor
+                                      : Theme.of(context).backgroundColor,
                                   width: 2,
                                 ),
                               ),
@@ -102,6 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                                 vertical: 15,
                               ),
                             ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Theme.of(context).backgroundColor,
+                            ),
                             shape: MaterialStateProperty.all<OutlinedBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
@@ -111,8 +119,9 @@ class _LoginPageState extends State<LoginPage> {
                                   bottomRight: Radius.circular(0),
                                 ),
                                 side: BorderSide(
-                                  color:
-                                      !login ? primaryColor : backgroundColor,
+                                  color: !login
+                                      ? primaryColor
+                                      : Theme.of(context).backgroundColor,
                                   width: 2,
                                 ),
                               ),

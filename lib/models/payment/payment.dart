@@ -1,4 +1,5 @@
 class Payment {
+  String? id;
   String? customerId;
   String? orderId;
   String? time;
@@ -9,6 +10,7 @@ class Payment {
   String? arnNumber;
 
   Payment({
+    this.id,
     this.customerId,
     this.orderId,
     this.time,

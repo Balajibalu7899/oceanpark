@@ -1,29 +1,27 @@
-import 'product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Offer {
+  String? id;
   String? title;
   String? subTitle;
   String? description;
   String? image;
-  List<Product>? product;
 
   Offer({
+    this.id,
     this.title,
     this.subTitle,
     this.description,
     this.image,
-    this.product,
   });
 
-  factory Offer.fromJson(Map<String, dynamic> json) {
+  factory Offer.fromDoc(DocumentSnapshot doc) {
     return Offer(
-      title: json['title'] as String?,
-      subTitle: json['sub_title'] as String?,
-      description: json['description'] as String?,
-      image: json['image'] as String?,
-      product: (json['product'] as List<dynamic>?)
-          ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      id: doc.id,
+      title: doc.data()!['title'] as String?,
+      subTitle: doc.data()!['sub_title'] as String?,
+      description: doc.data()!['description'] as String?,
+      image: doc.data()!['image'] as String?,
     );
   }
 
@@ -33,7 +31,6 @@ class Offer {
       'sub_title': subTitle,
       'description': description,
       'image': image,
-      'product': product?.map((e) => e.toJson()).toList(),
     };
   }
 }

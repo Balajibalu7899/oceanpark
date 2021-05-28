@@ -4,6 +4,8 @@ import 'package:ocean_park/pages/main/HomePage.dart';
 import 'package:ocean_park/pages/main/OrdersPage.dart';
 import 'package:ocean_park/pages/main/ProductPage.dart';
 import 'package:ocean_park/pages/main/ProfilePage.dart';
+import 'package:ocean_park/services/page_nav_service.dart';
+import 'package:provider/provider.dart';
 
 class HomeMain extends StatefulWidget {
   @override
@@ -19,14 +21,9 @@ class _HomeMainState extends State<HomeMain> {
     ProfilePage(),
   ];
 
-  void changePage(int index) {
-    setState(() {
-      _activePageIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    _activePageIndex = Provider.of<PageNavService>(context).page;
     return Scaffold(
       body: _pages[_activePageIndex],
       bottomNavigationBar: BottomAppBar(
@@ -35,7 +32,10 @@ class _HomeMainState extends State<HomeMain> {
         clipBehavior: Clip.antiAlias,
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          onTap: changePage,
+          onTap: (index) {
+            Provider.of<PageNavService>(context, listen: false)
+                .changePage(index);
+          },
           currentIndex: _activePageIndex,
           selectedItemColor: Theme.of(context).primaryColor,
           unselectedItemColor: Theme.of(context).textTheme.headline1!.color,

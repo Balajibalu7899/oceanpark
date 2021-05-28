@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/utilui/CouponButtomSheet.dart';
+import 'package:ocean_park/components/utilui/Coupons.dart';
 import 'package:ocean_park/components/utilui/CustomeIconButton.dart';
 import 'package:ocean_park/components/utilui/CustomeOutlineButton.dart';
 import 'package:ocean_park/components/utilui/LogOut.dart';
@@ -25,85 +25,82 @@ class ProfilePage extends StatelessWidget {
                 clipBehavior: Clip.none,
                 children: [
                   Container(
-                    height: 200,
+                    height: 150,
                     width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.all(10),
                     margin: Theme.of(context).cardTheme.margin,
                     decoration: containerdecoration,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    child: Row(
                       children: [
                         SizedBox(
-                          height: 20,
+                          width: 130,
                         ),
-                        Text(
-                          snapshot.customer.name!,
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.headline2,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              snapshot.customer.name!,
+                              maxLines: 1,
+                              style: Theme.of(context).textTheme.headline1,
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              snapshot.customer.phoneNumber.toString(),
+                              maxLines: 1,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              snapshot.customer.email!,
+                              maxLines: 1,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, left: 5),
-                          child: Text(
-                            snapshot.customer.phoneNumber.toString(),
-                            maxLines: 1,
-                            style: Theme.of(context).textTheme.headline3,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, left: 5),
-                          child: Text(
-                            snapshot.customer.email!,
-                            maxLines: 1,
-                            style: Theme.of(context).textTheme.headline3,
-                          ),
-                        ),
-                        Spacer(),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: CustomeOutlineButton(
-                            title: "Edit",
-                            tap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return ProfileEditPage();
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                        )
                       ],
                     ),
                   ),
                   Positioned(
-                    top: -40,
-                    left: 30,
+                    top: -60,
+                    left: 20,
                     child: CircleAvatar(
-                      radius: 50,
+                      radius: 60,
                       backgroundImage: NetworkImage(snapshot
                               .customer.profileImage ??
                           "https://static.wikia.nocookie.net/gameofthrones/images/b/be/AryaShipIronThrone.PNG/revision/latest/top-crop/width/360/height/360?cb=20190520174300"),
                     ),
                   ),
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: CustomeIconButton(
+                      iconname: Icons.create_sharp,
+                      callback: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProfileEditPage();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  )
                 ],
               ),
               Container(
-                height: 120,
                 width: MediaQuery.of(context).size.width,
                 margin: Theme.of(context).cardTheme.margin,
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.all(10),
                 decoration: containerdecoration,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        SizedBox(
-                          width: 20,
-                        ),
                         Text(
                           "Address",
-                          style: Theme.of(context).textTheme.headline2,
+                          style: Theme.of(context).textTheme.headline1,
                         ),
                         Spacer(),
                         CustomeIconButton(
@@ -121,7 +118,7 @@ class ProfilePage extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Text(
                         snapshot
                                 .customer
@@ -138,7 +135,7 @@ class ProfilePage extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  bottomsheet(context);
+                  Coupons.show(context);
                 },
                 child: Container(
                   height: 40,
@@ -148,43 +145,20 @@ class ProfilePage extends StatelessWidget {
                   decoration: containerdecoration,
                   child: Text(
                     "Coupons",
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return AddressEditPage();
-                      },
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width,
-                  margin: Theme.of(context).cardTheme.margin,
-                  padding: EdgeInsets.all(8.0),
-                  decoration: containerdecoration,
-                  child: Text(
-                    "Address",
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
               ),
               InkWell(
                 onTap: () {},
                 child: Container(
-                  height: 40,
                   width: MediaQuery.of(context).size.width,
                   margin: Theme.of(context).cardTheme.margin,
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(10.0),
                   decoration: containerdecoration,
                   child: Text(
                     "Terms of use",
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
               ),
@@ -193,14 +167,13 @@ class ProfilePage extends StatelessWidget {
                   logout(context);
                 },
                 child: Container(
-                  height: 40,
                   width: MediaQuery.of(context).size.width,
                   margin: Theme.of(context).cardTheme.margin,
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(10.0),
                   decoration: containerdecoration,
                   child: Text(
                     "LogOut",
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
               ),

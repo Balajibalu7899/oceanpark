@@ -1,10 +1,10 @@
-enum State { LODING, COMPLETED, ERROR }
+enum StatusState { LODING, COMPLETED, ERROR }
 
 class Status {
-  State state = State.LODING;
-  Status.loding() : state = State.LODING;
+  StatusState state = StatusState.LODING;
+  Status.loding() : state = StatusState.LODING;
 
-  Status.completed() : state = State.COMPLETED;
+  Status.completed() : state = StatusState.COMPLETED;
 
-  Status.error() : state = State.ERROR;
+  Status.error() : state = StatusState.ERROR;
 }

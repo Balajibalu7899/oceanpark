@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ocean_park/components/cards/CartProductCard.dart';
+import 'package:ocean_park/pages/sub/CheckoutPage.dart';
 import 'package:ocean_park/services/cart_service.dart';
 import 'package:ocean_park/services/order_service.dart';
 import 'package:provider/provider.dart';
@@ -33,13 +34,13 @@ class CartPage extends StatelessWidget {
                     onPressed: () {
                       Provider.of<OrderService>(context, listen: false)
                           .create(snapshot.cart);
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) {
-                      //       return CheckoutPage();
-                      //     },
-                      //   ),
-                      // );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return CheckoutPage();
+                          },
+                        ),
+                      );
                     },
                   ),
                 ),

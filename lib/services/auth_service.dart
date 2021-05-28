@@ -11,7 +11,6 @@ class AuthService extends ChangeNotifier {
   AppState _appState = AppState.initizing;
   AppState get appState => _appState;
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
   FirebaseAuth? _auth;
 
   User? user;
@@ -34,14 +33,17 @@ class AuthService extends ChangeNotifier {
     SharedPreferences sharedPref = await SharedPreferences.getInstance();
     if (sharedPref.getBool('newUser') == null) {
       try {
-        await FirebaseFirestore.instance.collection('customers').doc(user?.uid);
+        await FirebaseFirestore.instance
+            .collection('Customers')
+            .doc(user?.uid)
+            .get();
         this.setNewUser(true);
       } catch (error) {
         this.setNewUser(false);
       }
     } else {
-      _newUser = sharedPref.getBool('newUser');
-      this.setNewUser(_newUser!);
+      _appState = AppState.authorized;
+      notifyListeners();
     }
   }
 
@@ -73,9 +75,6 @@ class AuthService extends ChangeNotifier {
       isNewUser();
       return true;
     } catch (exception) {
-      _appState = AppState.unauthorized;
-      notifyListeners();
-      isNewUser();
       return false;
     }
   }
@@ -84,14 +83,11 @@ class AuthService extends ChangeNotifier {
     try {
       await _auth!
           .signInWithEmailAndPassword(email: email!, password: password!);
-      _appState = AppState.authorized;
+      _appState = AppState.authorizing;
       notifyListeners();
       isNewUser();
       return true;
     } catch (exception) {
-      _appState = AppState.unauthorized;
-      notifyListeners();
-      isNewUser();
       return false;
     }
   }
@@ -111,8 +107,6 @@ class AuthService extends ChangeNotifier {
       isNewUser();
       return true;
     } catch (err) {
-      _appState = AppState.unauthorized;
-      notifyListeners();
       return false;
     }
   }

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Coupon {
   String? code;
   String? title;
@@ -7,7 +9,7 @@ class Coupon {
   String? type;
   int? amount;
   int? minimumOrder;
-  String? expiry;
+  Timestamp? expiry;
 
   Coupon({
     this.code,
@@ -21,17 +23,17 @@ class Coupon {
     this.expiry,
   });
 
-  factory Coupon.fromJson(Map<String, dynamic> json) {
+  factory Coupon.fromDoc(DocumentSnapshot doc) {
     return Coupon(
-      code: json['code'] as String?,
-      title: json['title'] as String?,
-      subTitle: json['sub_title'] as String?,
-      description: json['description'] as String?,
-      image: json['image'] as String?,
-      type: json['type'] as String?,
-      amount: json['amount'] as int?,
-      minimumOrder: json['minimum_order'] as int?,
-      expiry: json['expiry'] as String?,
+      code: doc.data()!['code'] as String?,
+      title: doc.data()!['title'] as String?,
+      subTitle: doc.data()!['sub_title'] as String?,
+      description: doc.data()!['description'] as String?,
+      image: doc.data()!['image'] as String?,
+      type: doc.data()!['type'] as String?,
+      amount: doc.data()!['amount'] as int?,
+      minimumOrder: doc.data()!['minimum_order'] as int?,
+      expiry: doc.data()!['expiry'] as Timestamp?,
     );
   }
 

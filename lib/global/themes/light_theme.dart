@@ -10,9 +10,25 @@ class LightTheme {
       accentColor: accentColor,
       backgroundColor: Colors.white,
       scaffoldBackgroundColor: scaffoldColor,
-      textTheme: lighttexttheme,
+      textTheme: lightTextTheme,
       //inputtext theme
-      inputDecorationTheme: decoration,
+      inputDecorationTheme: InputDecorationTheme(
+        fillColor: backgroundColor,
+        filled: true,
+        labelStyle: TextStyle(
+            color: Color.fromRGBO(1, 1, 87, 1),
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
+        hintStyle: TextStyle(
+          color: Color.fromRGBO(180, 179, 186, 1),
+          fontSize: 16,
+        ),
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor, width: 1),
+        ),
+      ),
       //button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -34,7 +50,7 @@ class LightTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all<Color>(
-              lighttexttheme.headline1!.color!),
+              lightTextTheme.headline1!.color!),
           shape: MaterialStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
@@ -59,7 +75,7 @@ class LightTheme {
       ),
       //card or container theme
       cardTheme: CardTheme(
-        margin: EdgeInsets.all(10),
+        margin: EdgeInsets.all(5),
         color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

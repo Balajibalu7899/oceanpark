@@ -1,317 +1,308 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/utilui/CouponButtomSheet.dart';
+import 'package:ocean_park/components/utilui/Coupons.dart';
 import 'package:ocean_park/components/utilui/CustomeIconButton.dart';
 import 'package:ocean_park/global/texts/light_container_properties.dart';
 import 'package:ocean_park/pages/sub/PaymentsPage.dart';
 import 'package:ocean_park/services/cart_service.dart';
 import 'package:ocean_park/services/custome_service.dart';
+import 'package:ocean_park/services/order_service.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutPage extends StatelessWidget {
-  // final List<Cart> cart;
-  // CheckoutPage({required this.cart, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Consumer2<CartService, CustomerService>(
-        builder: (_, cartsnapshot, customersnapshot, child) {
-      return Scaffold(
-        bottomNavigationBar: BottomAppBar(
-          child: Container(
-            height: 50,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Total: ₹${cartsnapshot.totalprice}",
-                    maxLines: 1,
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ),
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).primaryColor,
-                    ),
+    return Consumer2<OrderService, CustomerService>(
+      builder: (_, orderSnap, customersnapshot, child) {
+        return Scaffold(
+          bottomNavigationBar: BottomAppBar(
+            child: Container(
+              height: 50,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Payment",
-                      style: TextStyle(
-                        fontSize:
-                            Theme.of(context).textTheme.headline2!.fontSize,
-                        fontWeight:
-                            Theme.of(context).textTheme.headline2!.fontWeight,
-                      ),
+                      "Total: ₹${orderSnap.order.totalPrice}",
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.headline2,
                     ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return PaymentsPage();
-                          },
-                        ),
-                      );
-                    },
                   ),
-                ),
-              ],
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                      ),
+                      child: Text(
+                        "Payment",
+                        style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.headline2!.fontSize,
+                          fontWeight:
+                              Theme.of(context).textTheme.headline2!.fontWeight,
+                        ),
+                      ),
+                      onPressed: () async {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return PaymentsPage();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        body: SafeArea(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
+          body: SafeArea(
             child: Column(
               children: [
                 Container(
-                  height: 120,
                   width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(10),
                   margin: Theme.of(context).cardTheme.margin,
-                  padding: EdgeInsets.all(5),
                   decoration: containerdecoration,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width: 20,
-                          ),
                           Text(
-                            "Address",
-                            style: Theme.of(context).textTheme.headline2,
+                            "Address Details",
+                            style: Theme.of(context).textTheme.headline1,
                           ),
                           Spacer(),
                           CustomeIconButton(
-                            iconname: Icons.delete_rounded,
+                            iconname: Icons.edit_outlined,
                             callback: () {},
                           ),
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(top: 5, left: 20.0),
                         child: Text(
-                          "${customersnapshot.customer.addresses![0].address} ${customersnapshot.customer.addresses![0].city} ${customersnapshot.customer.addresses![0].state} ${customersnapshot.customer.addresses![0].pinCode}",
-                          maxLines: 2,
+                          "Name: ${customersnapshot.customer.addresses![customersnapshot.customer.defaultAddress!].name}",
+                          maxLines: 1,
                           textAlign: TextAlign.start,
                           style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 20.0),
+                        child: Text(
+                          "Phone Number: ${customersnapshot.customer.addresses![customersnapshot.customer.defaultAddress!].phone}",
+                          maxLines: 1,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 20.0),
+                        child: Text(
+                          "Address: ${customersnapshot.customer.addresses![customersnapshot.customer.defaultAddress!].address}",
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.subtitle2,
                         ),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  height: 250,
+                  padding: EdgeInsets.all(10),
                   margin: Theme.of(context).cardTheme.margin,
                   decoration: containerdecoration,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 10,
+                      Text(
+                        "Orders",
+                        style: Theme.of(context).textTheme.headline1,
                       ),
-                      Align(
-                        alignment: Alignment(-0.9, 1),
-                        child: Text(
-                          "Orders",
-                          style: Theme.of(context).textTheme.headline2,
-                        ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            "No of Items in Bag:",
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontWeight,
+                              color: Color.fromRGBO(135, 134, 147, 1),
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            "${orderSnap.order.products!.length}",
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontWeight,
+                              color: Color.fromRGBO(135, 134, 147, 1),
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "No of Items in Bag:",
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontSize,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontWeight,
-                                color: Color.fromRGBO(
-                                  135,
-                                  134,
-                                  147,
-                                  1,
-                                ),
-                              ),
+                      SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Text(
+                            "MRP:",
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontWeight,
+                              color: Color.fromRGBO(135, 134, 147, 1),
                             ),
-                            Spacer(),
-                            Text(
-                              "${cartsnapshot.cart.length}",
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontSize,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontWeight,
-                                color: Color.fromRGBO(
-                                  135,
-                                  134,
-                                  147,
-                                  1,
-                                ),
-                              ),
+                          ),
+                          Spacer(),
+                          Text(
+                            "₹${orderSnap.order.price}",
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontWeight,
+                              color: Color.fromRGBO(135, 134, 147, 1),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Price:",
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontSize,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontWeight,
-                                color: Color.fromRGBO(
-                                  135,
-                                  134,
-                                  147,
-                                  1,
-                                ),
-                              ),
+                      SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Text(
+                            "Discount Price:",
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontWeight,
+                              color: Color.fromRGBO(135, 134, 147, 1),
                             ),
-                            Spacer(),
-                            Text(
-                              "₹${cartsnapshot.totalprice}",
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontSize,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontWeight,
-                                color: Color.fromRGBO(
-                                  135,
-                                  134,
-                                  147,
-                                  1,
-                                ),
-                              ),
+                          ),
+                          Spacer(),
+                          Text(
+                            "₹${orderSnap.order.discount}",
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontWeight,
+                              color: Theme.of(context).primaryColor,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Discount Price:",
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontSize,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontWeight,
-                                color: Color.fromRGBO(
-                                  135,
-                                  134,
-                                  147,
-                                  1,
+                      Row(
+                        children: [
+                          Text(
+                            "Coupon Code:",
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontWeight,
+                              color: Color.fromRGBO(
+                                135,
+                                134,
+                                147,
+                                1,
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+                          orderSnap.order.couponCode == null
+                              ? TextButton(
+                                  style: ButtonStyle(
+                                    padding:
+                                        MaterialStateProperty.all<EdgeInsets>(
+                                      EdgeInsets.symmetric(vertical: 0),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "Add Coupon",
+                                    style: TextStyle(
+                                      fontSize: Theme.of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .fontSize,
+                                      fontWeight: Theme.of(context)
+                                          .textTheme
+                                          .headline2!
+                                          .fontWeight,
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Coupons.show(context);
+                                  },
+                                )
+                              : Text(
+                                  "₹${orderSnap.order.couponAmount} on ${orderSnap.order.couponCode!}",
+                                  style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .fontSize,
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .headline2!
+                                        .fontWeight,
+                                    color: Theme.of(context).accentColor,
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Spacer(),
-                            Text(
-                              "₹1600",
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontSize,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontWeight,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Coupon Code:",
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontSize,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontWeight,
-                                color: Color.fromRGBO(
-                                  135,
-                                  134,
-                                  147,
-                                  1,
-                                ),
-                              ),
-                            ),
-                            Spacer(),
-                            TextButton(
-                              child: Text(
-                                "Add Coupon",
-                                style: TextStyle(
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .fontSize,
-                                  fontWeight: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .fontWeight,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                              ),
-                              onPressed: () {
-                                bottomsheet(context);
-                              },
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
                       Divider(
                         color: Theme.of(context).textTheme.headline1!.color,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Text("Total Price:",
-                                style: Theme.of(context).textTheme.headline2),
-                            Spacer(),
-                            Text("₹1600",
-                                style: Theme.of(context).textTheme.headline2),
-                          ],
-                        ),
+                      SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Text("Total Price:",
+                              style: Theme.of(context).textTheme.headline2),
+                          Spacer(),
+                          Text(
+                            "₹${orderSnap.order.totalPrice!}",
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -319,8 +310,8 @@ class CheckoutPage extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

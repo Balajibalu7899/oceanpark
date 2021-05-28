@@ -1,6 +1,8 @@
 import 'location.dart';
 
 class Addresses {
+  String? name;
+  String? phone;
   String? address;
   CustomeLocation? location;
   String? homeNumber;
@@ -11,6 +13,8 @@ class Addresses {
   int? pinCode;
 
   Addresses({
+    this.name,
+    this.phone,
     this.address,
     this.location,
     this.homeNumber,
@@ -23,6 +27,8 @@ class Addresses {
 
   factory Addresses.fromJson(Map<String, dynamic> json) {
     return Addresses(
+      name: json['name'] as String?,
+      phone: json['phone'] as String?,
       address: json['address'] as String?,
       location: json['location'] == null
           ? null
@@ -38,6 +44,8 @@ class Addresses {
 
   Map<String, dynamic> toJson() {
     return {
+      'name': name,
+      'phone': phone,
       'address': address,
       'location': location?.toJson(),
       'home_number': homeNumber,
