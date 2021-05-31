@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/utilui/CustomeOutlineButton.dart';
-import 'package:ocean_park/components/utilui/CustomeTextField.dart';
-import 'package:ocean_park/services/auth_service.dart';
+import '/components/utilui/CustomeOutlineButton.dart';
+import '/components/utilui/CustomeTextField.dart';
+import '/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
 class PhoneLogin extends StatefulWidget {
@@ -41,7 +41,6 @@ class _PhoneLoginState extends State<PhoneLogin> {
                   ),
                 ),
                 Container(
-                  height: 350,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -70,27 +69,31 @@ class _PhoneLoginState extends State<PhoneLogin> {
                           child: Text(
                             "Phone Login",
                             style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontSize,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline2!
-                                    .fontWeight),
+                              color: Theme.of(context).primaryColor,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontWeight,
+                            ),
                           ),
                         ),
                       ),
                       Container(
-                        height: 200,
                         margin:
                             EdgeInsets.only(left: 10, right: 10, bottom: 10),
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardTheme.color,
                           border:
                               Border.all(color: Theme.of(context).primaryColor),
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
                           boxShadow: [
                             BoxShadow(
                               color: Theme.of(context).cardTheme.shadowColor!,
@@ -107,15 +110,15 @@ class _PhoneLoginState extends State<PhoneLogin> {
                               controller: _phoneController,
                               label: "Phone",
                               hinttext: "Phone Number",
+                              keyboardType: TextInputType.phone,
                             ),
-                            codeSent == true
-                                ? CustomeTextField(
-                                    controller: _otpController,
-                                    label: "Otp",
-                                    hinttext: "Enter Otp")
-                                : SizedBox(
-                                    height: 2,
-                                  ),
+                            if (codeSent == true)
+                              CustomeTextField(
+                                controller: _otpController,
+                                label: "OTP",
+                                hinttext: "Enter Otp",
+                                keyboardType: TextInputType.number,
+                              ),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: CustomeOutlineButton(
@@ -124,9 +127,12 @@ class _PhoneLoginState extends State<PhoneLogin> {
                                   codeSent == true
                                       ? signInWithOtp(
                                           _otpController.text.toString(),
-                                          verificationId)
-                                      : verifyPhone('+91' +
-                                          _phoneController.text.toString());
+                                          verificationId,
+                                        )
+                                      : verifyPhone(
+                                          '+91' +
+                                              _phoneController.text.toString(),
+                                        );
                                 },
                               ),
                             ),
@@ -144,9 +150,14 @@ class _PhoneLoginState extends State<PhoneLogin> {
     );
   }
 
-  signIn(AuthCredential authCredential) {
-    FirebaseAuth.instance.signInWithCredential(authCredential);
-    Provider.of<AuthService>(context, listen: false).phoneAuth();
+  signIn(AuthCredential authCredential) async {
+    try {
+      await FirebaseAuth.instance.signInWithCredential(authCredential);
+      Provider.of<AuthService>(context, listen: false).phoneAuth();
+      Navigator.of(context).pop();
+    } catch (err) {
+      print(err);
+    }
   }
 
   signInWithOtp(smsCode, verificationId) {

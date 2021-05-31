@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ocean_park/components/cards/OrderProductCard.dart';
-import 'package:ocean_park/components/utilui/CustomeDottedLine.dart';
-import 'package:ocean_park/components/utilui/CustomeSlider.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/models/order/order.dart';
-import 'package:ocean_park/pages/sub/OrderDetailsPage.dart';
+import '/components/cards/OrderProductCard.dart';
+import '/components/utilui/CustomeDottedLine.dart';
+import '/components/utilui/CustomeSlider.dart';
+import '/global/texts/light_container_properties.dart';
+import '/models/order/order.dart';
+import '/pages/sub/OrderDetailsPage.dart';
 
 class OrdersCard extends StatefulWidget {
   final Order order;

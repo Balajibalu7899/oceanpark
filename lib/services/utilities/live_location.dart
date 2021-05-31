@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
-import 'package:ocean_park/components/utilui/CustomSnackBar.dart';
-import 'package:ocean_park/models/customer/location.dart';
+import '/components/utilui/CustomSnackBar.dart';
+import '/models/customer/location.dart';
 
 class LiveLocation {
   Future<CustomeLocation> location(BuildContext context) async {

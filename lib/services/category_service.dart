@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ocean_park/models/category/category.dart';
-import 'package:ocean_park/services/utilities/status.dart';
+import '/models/category/category.dart';
+import '/services/utilities/status.dart';
 
 class CategoryService with ChangeNotifier {
   Status _status = Status.loding();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/utilui/CustomeQuantitySelector.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/models/cart/cart.dart';
+import '/components/utilui/CustomeQuantitySelector.dart';
+import '/global/texts/light_container_properties.dart';
+import '/models/cart/cart.dart';
 
 class CardProductCard extends StatelessWidget {
   final CartProduct cart;
@@ -11,7 +11,7 @@ class CardProductCard extends StatelessWidget {
     return Container(
       margin: Theme.of(context).cardTheme.margin,
       width: MediaQuery.of(context).size.width,
-      height: 150,
+      height: 130,
       decoration: containerdecoration,
       child: Row(
         children: [
@@ -42,7 +42,7 @@ class CardProductCard extends StatelessWidget {
                 Text(
                   cart.title!,
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
                 SizedBox(
                   height: 5,
@@ -50,7 +50,7 @@ class CardProductCard extends StatelessWidget {
                 Text(
                   "Cut: ${cart.cut}",
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 SizedBox(
                   height: 5,
@@ -59,7 +59,7 @@ class CardProductCard extends StatelessWidget {
                   "Price: ₹${cart.offerPrice}/ ${cart.weight}${cart.unitType}",
                   maxLines: 1,
                   style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.headline3!.fontSize,
+                    fontSize: Theme.of(context).textTheme.headline6!.fontSize,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -69,13 +69,7 @@ class CardProductCard extends StatelessWidget {
                     Text(
                       "Total: ₹${cart.offerPrice! * cart.quantity!}",
                       maxLines: 1,
-                      style: TextStyle(
-                        fontSize:
-                            Theme.of(context).textTheme.headline2!.fontSize,
-                        fontWeight:
-                            Theme.of(context).textTheme.headline2!.fontWeight,
-                        color: Theme.of(context).textTheme.headline3!.color,
-                      ),
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                     Spacer(),
                     CustomeQuantitySelector(

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/cards/CategoryCard.dart';
-import 'package:ocean_park/components/cards/ProductCard.dart';
-import 'package:ocean_park/models/filter/filter.dart';
-import 'package:ocean_park/pages/sub/offer_details_page.dart';
-import 'package:ocean_park/services/category_service.dart';
-import 'package:ocean_park/services/offer_service.dart';
-import 'package:ocean_park/services/page_nav_service.dart';
-import 'package:ocean_park/services/products_service.dart';
+import '/components/cards/CategoryCard.dart';
+import '/components/cards/ProductCard.dart';
+import '/models/filter/filter.dart';
+import '/pages/sub/offer_details_page.dart';
+import '/services/category_service.dart';
+import '/services/offer_service.dart';
+import '/services/page_nav_service.dart';
+import '/services/products_service.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,29 +18,29 @@ class HomePage extends StatelessWidget {
         SizedBox(
           height: 30,
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
-            controller: _search,
-            style: Theme.of(context).textTheme.headline4,
-            decoration: InputDecoration(
-              labelText: "Search",
-              hintText: "Search....",
-              suffixIcon: IconButton(
-                icon: Icon(
-                  Icons.search,
-                  size: 30,
-                ),
-                color: Theme.of(context).textTheme.headline1!.color,
-                onPressed: () {
-                  // Provider.of<ProductService>(context)
-                  //     .searchProduct(controller.text);
-                },
-              ),
-              border: InputBorder.none,
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: TextFormField(
+        //     controller: _search,
+        //     style: Theme.of(context).textTheme.headline4,
+        //     decoration: InputDecoration(
+        //       labelText: "Search",
+        //       hintText: "Search....",
+        //       suffixIcon: IconButton(
+        //         icon: Icon(
+        //           Icons.search,
+        //           size: 30,
+        //         ),
+        //         color: Theme.of(context).textTheme.headline1!.color,
+        //         onPressed: () {
+        //           // Provider.of<ProductService>(context)
+        //           //     .searchProduct(controller.text);
+        //         },
+        //       ),
+        //       border: InputBorder.none,
+        //     ),
+        //   ),
+        // ),
         Consumer<OfferService>(builder: (_, offerSnap, __) {
           return SizedBox(
             height: 150,

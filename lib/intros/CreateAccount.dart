@@ -1,16 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/utilui/ImageSelector.dart';
-import 'package:ocean_park/components/utilui/CustomSnackBar.dart';
-import 'package:ocean_park/components/utilui/CustomeOutlineButton.dart';
-import 'package:ocean_park/components/utilui/CustomeTextField.dart';
-import 'package:ocean_park/models/customer/addresses.dart';
-import 'package:ocean_park/models/customer/customer.dart';
-import 'package:ocean_park/models/customer/location.dart';
-import 'package:ocean_park/pages/main/HomeMain.dart';
-import 'package:ocean_park/services/auth_service.dart';
-import 'package:ocean_park/services/custome_service.dart';
-import 'package:ocean_park/services/utilities/live_location.dart';
+import '/components/utilui/ImageSelector.dart';
+import '/components/utilui/CustomSnackBar.dart';
+import '/components/utilui/CustomeOutlineButton.dart';
+import '/components/utilui/CustomeTextField.dart';
+import '/models/customer/addresses.dart';
+import '/models/customer/customer.dart';
+import '/models/customer/location.dart';
+import '/services/auth_service.dart';
+import '/services/custome_service.dart';
+import '/services/utilities/live_location.dart';
 import 'package:provider/provider.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -22,7 +21,8 @@ class _CreateAccountState extends State<CreateAccount> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
+  TextEditingController _areaController = TextEditingController();
+  TextEditingController _streetController = TextEditingController();
   TextEditingController _localityController = TextEditingController();
   TextEditingController _cityController = TextEditingController();
   TextEditingController _stateController = TextEditingController();
@@ -38,26 +38,29 @@ class _CreateAccountState extends State<CreateAccount> {
       name: _nameController.text,
       phoneNumber: int.parse(_phoneController.text),
       email: _emailController.text,
-      defaultAddress: 0,
       profileImage: profileImage,
+      defaultAddress: 0,
       addresses: [
         Addresses(
-          address: _addressController.text,
+          name: _nameController.text,
+          phone: _phoneController.text,
+          area: _areaController.text,
+          street: _streetController.text,
           locatity: _localityController.text,
           city: _cityController.text,
           state: _stateController.text,
           pinCode: int.parse(_pincodeController.text),
+          address:
+              "${_areaController.text},${_streetController.text},${_localityController.text},${_cityController.text},${_stateController.text},${_pincodeController.text}",
           location: location,
-        ),
+        )
       ],
     );
     bool log = await Provider.of<CustomerService>(context, listen: false)
         .create(customer);
     if (log) {
       customeSnackBar(context, "user added");
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return HomeMain();
-      }));
+      Navigator.of(context).pop();
     } else {
       customeSnackBar(context, "Unable to create User");
     }
@@ -70,11 +73,10 @@ class _CreateAccountState extends State<CreateAccount> {
       body: SingleChildScrollView(
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
             children: [
               SizedBox(
-                height: 50,
+                height: 20,
               ),
               Align(
                 alignment: Alignment.topCenter,
@@ -88,25 +90,32 @@ class _CreateAccountState extends State<CreateAccount> {
                     });
                   },
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(profileImage == null
-                        ? "https://static.wikia.nocookie.net/gameofthrones/images/b/be/AryaShipIronThrone.PNG/revision/latest/top-crop/width/360/height/360?cb=20190520174300"
-                        : profileImage!),
+                    backgroundImage: NetworkImage(
+                      profileImage == null
+                          ? "https://firebasestorage.googleapis.com/v0/b/ocean-park-621.appspot.com/o/Public%2FAssets%2FIcons%2FPerson.jpg?alt=media&token=e7b625c0-48e9-47d5-a35c-a48405326233"
+                          : profileImage!,
+                    ),
                     radius: 50,
                   ),
                 ),
               ),
               CustomeTextField(
-                  controller: _nameController,
-                  label: "Name",
-                  hinttext: "Enter FullName"),
+                controller: _nameController,
+                label: "Name",
+                hinttext: "Enter FullName",
+              ),
               CustomeTextField(
-                  controller: _phoneController,
-                  label: "Phone",
-                  hinttext: "Enter PhoneNumber"),
+                controller: _phoneController,
+                label: "Phone",
+                hinttext: "Enter PhoneNumber",
+                keyboardType: TextInputType.phone,
+              ),
               CustomeTextField(
-                  controller: _emailController,
-                  label: "Email",
-                  hinttext: "Enter EmailAddress"),
+                controller: _emailController,
+                label: "Email",
+                hinttext: "Enter EmailAddress",
+                keyboardType: TextInputType.emailAddress,
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
@@ -118,11 +127,6 @@ class _CreateAccountState extends State<CreateAccount> {
                 onTap: () async {
                   location = await LiveLocation().location(context);
                   customeSnackBar(context, " LiveLocation as Been Uploaded");
-                  // final coordinates = await Coordinates(
-                  //     location!.latitude, location!.longitude);
-                  // var address = await Geocoder.local
-                  //     .findAddressesFromCoordinates(coordinates);
-                  // print(address);
                 },
                 child: Container(
                   height: 45,
@@ -167,33 +171,43 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
               ),
               CustomeTextField(
-                  controller: _addressController,
-                  label: "Address",
-                  hinttext: "Address(House No,Building,Street)"),
+                controller: _areaController,
+                label: "House NO / Area",
+                hinttext: "Enter the area",
+              ),
               CustomeTextField(
-                  controller: _localityController,
-                  label: "Locality/Town",
-                  hinttext: "Locality or Town"),
+                controller: _streetController,
+                label: "Street",
+                hinttext: "Enter the Street",
+                keyboardType: TextInputType.streetAddress,
+              ),
               CustomeTextField(
-                  controller: _cityController,
-                  label: "City",
-                  hinttext: "Enter City"),
+                controller: _localityController,
+                label: "Locality",
+                hinttext: "Enter Locality/ Land mark",
+              ),
+              CustomeTextField(
+                controller: _cityController,
+                label: "City",
+                hinttext: "Enter City",
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    width: (MediaQuery.of(context).size.width / 2),
+                  Expanded(
                     child: CustomeTextField(
-                        controller: _stateController,
-                        label: "State",
-                        hinttext: "Enter State"),
+                      controller: _stateController,
+                      label: "State",
+                      hinttext: "Enter State",
+                    ),
                   ),
-                  SizedBox(
-                    width: (MediaQuery.of(context).size.width / 2),
+                  Expanded(
                     child: CustomeTextField(
-                        controller: _pincodeController,
-                        label: "PinCode",
-                        hinttext: "Enter PinCode"),
+                      controller: _pincodeController,
+                      label: "PinCode",
+                      hinttext: "Enter PinCode",
+                      keyboardType: TextInputType.phone,
+                    ),
                   ),
                 ],
               ),

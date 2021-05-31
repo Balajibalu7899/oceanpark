@@ -1,14 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ocean_park/models/cart/cart.dart';
-import 'package:ocean_park/models/coupon/coupon.dart';
-import 'package:ocean_park/models/order/order.dart';
-import 'package:ocean_park/models/order/OrdereState.dart';
-import 'package:ocean_park/models/order/order_product.dart';
-import 'package:ocean_park/models/order/payment_method.dart';
-import 'package:ocean_park/models/payment/payment.dart';
-import 'package:ocean_park/services/utilities/status.dart';
+import '/models/cart/cart.dart';
+import '/models/order/order.dart';
+import '/models/coupon/coupon.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '/models/order/OrdereState.dart';
+import '/services/utilities/status.dart';
+import '/models/order/order_product.dart';
+import '/models/order/payment_method.dart';
 
 class OrderService with ChangeNotifier {
   Status status = Status.loding();

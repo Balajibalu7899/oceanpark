@@ -36,6 +36,22 @@ class Customer {
     );
   }
 
+  Map<String, dynamic> toUpdateJson() {
+    return {
+      'name': name,
+      'email': email,
+      'phone_number': phoneNumber,
+      'profile_image': profileImage,
+    };
+  }
+
+  Map<String, dynamic> addressToJson() {
+    return {
+      'default_address': defaultAddress ?? 0,
+      'addresses': addresses?.map((e) => e.toJson()).toList(),
+    };
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'name': name,

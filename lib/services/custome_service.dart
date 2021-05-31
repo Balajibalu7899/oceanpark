@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ocean_park/models/customer/addresses.dart';
-import 'package:ocean_park/models/customer/customer.dart';
-import 'package:ocean_park/services/auth_service.dart';
-import 'package:ocean_park/services/utilities/status.dart';
+import '/models/customer/addresses.dart';
+import '/models/customer/customer.dart';
+import '/services/auth_service.dart';
+import '/services/utilities/status.dart';
 
 class CustomerService extends ChangeNotifier {
   Status status = Status.loding();
@@ -13,6 +13,7 @@ class CustomerService extends ChangeNotifier {
   CollectionReference _reference =
       FirebaseFirestore.instance.collection("Customers");
   Customer get customer => _customer!;
+  List<Addresses>? get addresses => _customer!.addresses;
 
   CustomerService() {
     getCustomer();
@@ -54,21 +55,23 @@ class CustomerService extends ChangeNotifier {
     }
   }
 
-  void updateCustomer(Customer customer) async {
+  Future<void> updateCustomer(Customer customer) async {
     try {
-      await _reference.doc(user!.uid).update(customer.toJson());
-      status = Status.completed();
-      notifyListeners();
+      await _reference.doc(user!.uid).update(customer.toUpdateJson());
+      getCustomer();
     } catch (err) {
       status = Status.error();
       notifyListeners();
     }
   }
 
-  Future<bool> updateAddress(Addresses addresses) async {
+  Future<bool> updateAddress(
+      List<Addresses> addresses, int defaultAddress) async {
     try {
-      _customer!.addresses!.add(addresses);
-      await _reference.doc(user?.uid).update(_customer!.toJson());
+      _customer!.addresses = addresses;
+      _customer!.defaultAddress = defaultAddress;
+      await _reference.doc(user?.uid).update(_customer!.addressToJson());
+      notifyListeners();
       return true;
     } catch (err) {
       return false;

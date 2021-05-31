@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/utilui/Coupons.dart';
-import 'package:ocean_park/components/utilui/CustomeIconButton.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/pages/sub/PaymentsPage.dart';
-import 'package:ocean_park/services/cart_service.dart';
-import 'package:ocean_park/services/custome_service.dart';
-import 'package:ocean_park/services/order_service.dart';
+import 'package:oceanpark/pages/sub/AddressEditPage.dart';
+import '/components/utilui/Coupons.dart';
+import '/components/utilui/CustomeIconButton.dart';
+import '/global/texts/light_container_properties.dart';
+import '/pages/sub/PaymentsPage.dart';
+import '/services/custome_service.dart';
+import '/services/order_service.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutPage extends StatelessWidget {
@@ -78,7 +78,14 @@ class CheckoutPage extends StatelessWidget {
                           Spacer(),
                           CustomeIconButton(
                             iconname: Icons.edit_outlined,
-                            callback: () {},
+                            callback: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                  return AddressEditPage();
+                                }),
+                              );
+                            },
                           ),
                         ],
                       ),

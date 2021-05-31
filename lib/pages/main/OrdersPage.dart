@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/cards/OrdersCard.dart';
-import 'package:ocean_park/services/order_service.dart';
+import '/components/cards/OrdersCard.dart';
+import '/services/order_service.dart';
 import 'package:provider/provider.dart';
 
 class OrdersPage extends StatelessWidget {

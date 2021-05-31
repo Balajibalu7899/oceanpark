@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/utilui/CustomeTextField.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/models/order/order.dart';
-import 'package:ocean_park/models/order/payment_method.dart';
-import 'package:ocean_park/services/cart_service.dart';
-import 'package:ocean_park/services/order_service.dart';
+import '/components/utilui/CustomeTextField.dart';
+import '/global/texts/light_container_properties.dart';
+import '/models/order/order.dart';
+import '/models/order/payment_method.dart';
+import '/services/cart_service.dart';
+import '/services/order_service.dart';
 import 'package:provider/provider.dart';
 
 class PaymentsPage extends StatefulWidget {

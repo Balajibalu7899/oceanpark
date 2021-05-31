@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:ocean_park/models/cart/cart.dart';
-import 'package:ocean_park/models/product/cut.dart';
-import 'package:ocean_park/models/product/product.dart';
-import 'package:ocean_park/services/utilities/status.dart';
+import '/models/cart/cart.dart';
+import '/models/product/cut.dart';
+import '/models/product/product.dart';
+import '/services/utilities/status.dart';
 
 class CartService extends ChangeNotifier {
   Status _status = Status.loding();
@@ -118,12 +118,14 @@ class CartService extends ChangeNotifier {
   //decrease the units
   decreaseQuantity(int index) async {
     try {
-      _cart[index].quantity = _cart[index].quantity! - 1;
-      await collection
-          .doc("${user!.uid}/Cart/${_cart[index].productId}")
-          .update({"quantity": _cart[index].quantity});
-      _totalprice -= _cart[index].offerPrice!;
-      notifyListeners();
+      if (_cart[index].quantity! > 1) {
+        _cart[index].quantity = _cart[index].quantity! - 1;
+        await collection
+            .doc("${user!.uid}/Cart/${_cart[index].productId}")
+            .update({"quantity": _cart[index].quantity});
+        _totalprice -= _cart[index].offerPrice!;
+        notifyListeners();
+      }
     } catch (error) {
       print(error);
     }

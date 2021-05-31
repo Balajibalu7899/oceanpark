@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
-import 'package:ocean_park/models/filter/filter.dart';
-import 'package:ocean_park/models/product/product.dart';
-import 'package:ocean_park/services/utilities/status.dart';
+import '/models/filter/filter.dart';
+import '/models/product/product.dart';
+import '/services/utilities/status.dart';
 
 class ProductService extends ChangeNotifier {
   Status status = Status.loding();

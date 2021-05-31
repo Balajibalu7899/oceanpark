@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/cards/cut_card.dart';
-import 'package:ocean_park/models/product/product.dart';
-import 'package:ocean_park/services/cart_service.dart';
+import '/components/cards/cut_card.dart';
+import '/models/product/product.dart';
+import '/services/cart_service.dart';
 import 'package:provider/provider.dart';
 
 class CutSelector {

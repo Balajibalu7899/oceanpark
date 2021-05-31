@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ocean_park/models/coupon/coupon.dart';
-import 'package:ocean_park/services/utilities/status.dart';
+import '/models/coupon/coupon.dart';
+import '/services/utilities/status.dart';
 
 class CouponService with ChangeNotifier {
   Status _status = Status.loding();

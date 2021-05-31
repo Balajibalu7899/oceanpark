@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/models/coupon/coupon.dart';
+import '/global/texts/light_container_properties.dart';
+import '/models/coupon/coupon.dart';
 
 class CouponCard extends StatelessWidget {
   final Coupon coupon;

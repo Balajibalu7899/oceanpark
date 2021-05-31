@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ocean_park/components/utilui/CustomeSlider.dart';
-import 'package:ocean_park/models/order/order.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/components/cards/OrderedProductDetailsCard.dart';
+import '/components/utilui/CustomeSlider.dart';
+import '/models/order/order.dart';
+import '/global/texts/light_container_properties.dart';
+import '/components/cards/OrderedProductDetailsCard.dart';
 
 class OrderDetailsPage extends StatelessWidget {
   final Order order;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ocean_park/components/utilui/CustomeQuantitySelector.dart';
-import 'package:ocean_park/components/utilui/cut_selector.dart';
-import 'package:ocean_park/models/product/product.dart';
-import 'package:ocean_park/services/cart_service.dart';
+import '/components/utilui/CustomeQuantitySelector.dart';
+import '/components/utilui/cut_selector.dart';
+import '/models/product/product.dart';
+import '/services/cart_service.dart';
 import 'package:provider/provider.dart';
 
 class CartButton extends StatefulWidget {

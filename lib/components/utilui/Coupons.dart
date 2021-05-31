@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/cards/CouponCard.dart';
-// import 'package:ocean_park/components/utilui/CustomeSearchBar.dart';
-import 'package:ocean_park/services/coupon_service.dart';
-import 'package:ocean_park/services/order_service.dart';
+import '/components/cards/CouponCard.dart';
+// import '/components/utilui/CustomeSearchBar.dart';
+import '/services/coupon_service.dart';
+import '/services/order_service.dart';
 import 'package:provider/provider.dart';
 
 class Coupons {

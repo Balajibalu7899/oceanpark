@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/models/offer/offer.dart';
+import '/models/offer/offer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ocean_park/models/product/product.dart';
-import 'package:ocean_park/services/utilities/status.dart';
+import '/models/product/product.dart';
+import '/services/utilities/status.dart';
 
 class OfferService with ChangeNotifier {
   Status _status = Status.loding();

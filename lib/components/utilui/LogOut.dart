@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/services/auth_service.dart';
+import '/services/auth_service.dart';
 
 logout(BuildContext context) {
   return showDialog(

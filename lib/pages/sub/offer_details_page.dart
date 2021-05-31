@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ocean_park/components/cards/ProductCard.dart';
-import 'package:ocean_park/models/offer/offer.dart';
-import 'package:ocean_park/services/offer_service.dart';
+import '/components/cards/ProductCard.dart';
+import '/models/offer/offer.dart';
+import '/services/offer_service.dart';
 import 'package:provider/provider.dart';
 
 class OfferDetailsPage extends StatelessWidget {

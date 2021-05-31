@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/pages/main/CartPage.dart';
-import 'package:ocean_park/pages/main/HomePage.dart';
-import 'package:ocean_park/pages/main/OrdersPage.dart';
-import 'package:ocean_park/pages/main/ProductPage.dart';
-import 'package:ocean_park/pages/main/ProfilePage.dart';
-import 'package:ocean_park/services/page_nav_service.dart';
+import '/pages/main/CartPage.dart';
+import '/pages/main/HomePage.dart';
+import '/pages/main/OrdersPage.dart';
+import '/pages/main/ProductPage.dart';
+import '/pages/main/ProfilePage.dart';
+import '/services/page_nav_service.dart';
 import 'package:provider/provider.dart';
 
 class HomeMain extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/global/colors/light_colors.dart';
+import '/global/colors/light_colors.dart';
 
 final InputDecorationTheme decoration = InputDecorationTheme(
   labelStyle: TextStyle(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/models/order/order_product.dart';
+import '/global/texts/light_container_properties.dart';
+import '/models/order/order_product.dart';
 
 class OrderProductCard extends StatelessWidget {
   final OrderProduct product;

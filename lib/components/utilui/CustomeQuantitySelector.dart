@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/utilui/CustomeIconButton.dart';
-import 'package:ocean_park/services/cart_service.dart';
+import '/components/utilui/CustomeIconButton.dart';
+import '/services/cart_service.dart';
 import 'package:provider/provider.dart';
 
 class CustomeQuantitySelector extends StatefulWidget {
@@ -32,19 +32,20 @@ class _CustomeQuantitySelectorState extends State<CustomeQuantitySelector> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             CustomeIconButton(
-                iconname: Icons.minimize_rounded,
-                callback: () {
-                  Provider.of<CartService>(context, listen: false)
-                      .decreaseQuantity(itemIndex!);
-                }),
+              iconname: Icons.minimize_rounded,
+              callback: () {
+                Provider.of<CartService>(context, listen: false)
+                    .decreaseQuantity(itemIndex!);
+              },
+            ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
                 snapshot.cart[itemIndex!].quantity!.toString(),
                 style: TextStyle(
                   decoration: TextDecoration.underline,
-                  fontSize: Theme.of(context).textTheme.headline1!.fontSize,
-                  fontWeight: Theme.of(context).textTheme.headline1!.fontWeight,
+                  fontSize: Theme.of(context).textTheme.headline2!.fontSize,
+                  fontWeight: Theme.of(context).textTheme.headline2!.fontWeight,
                 ),
               ),
             ),

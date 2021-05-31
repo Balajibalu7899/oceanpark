@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ocean_park/models/product/product.dart';
-import 'package:ocean_park/services/products_service.dart';
-import 'package:ocean_park/components/cards/ProductCard.dart';
-import 'package:ocean_park/components/utilui/cart_button.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
+import '/models/product/product.dart';
+import '/services/products_service.dart';
+import '/components/cards/ProductCard.dart';
+import '/components/utilui/cart_button.dart';
+import '/global/texts/light_container_properties.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final Product product;
@@ -20,15 +20,15 @@ class ProductDetailsPage extends StatelessWidget {
             SizedBox(width: 10),
             Text(
               "₹${product.offerPrice}",
-              style: Theme.of(context).textTheme.headline1,
+              style: Theme.of(context).textTheme.headline2,
             ),
             SizedBox(width: 10),
             Text(
               "₹${(product.price!)}",
               style: TextStyle(
-                fontSize: Theme.of(context).textTheme.headline3!.fontSize,
+                fontSize: Theme.of(context).textTheme.headline2!.fontSize,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).textTheme.headline4!.color,
+                color: Theme.of(context).textTheme.headline2!.color,
                 decoration: TextDecoration.lineThrough,
                 decorationThickness: 3.0,
               ),
@@ -37,13 +37,14 @@ class ProductDetailsPage extends StatelessWidget {
             Text(
               "${product.discount!.toStringAsFixed(1)}% off",
               style: TextStyle(
-                fontSize: Theme.of(context).textTheme.headline1!.fontSize,
-                fontWeight: Theme.of(context).textTheme.headline1!.fontWeight,
+                fontSize: Theme.of(context).textTheme.headline2!.fontSize,
+                fontWeight: Theme.of(context).textTheme.headline2!.fontWeight,
                 color: Theme.of(context).primaryColor,
               ),
             ),
             Spacer(),
             CartButton(product: product),
+            SizedBox(width: 10)
           ],
         ),
       ),

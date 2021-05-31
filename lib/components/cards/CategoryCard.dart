@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
-import 'package:ocean_park/models/category/category.dart';
+import '/global/texts/light_container_properties.dart';
+import '/models/category/category.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category category;

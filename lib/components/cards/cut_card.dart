@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/models/product/cut.dart';
+import '/models/product/cut.dart';
 
 class CutCard extends StatelessWidget {
   final Cut cut;

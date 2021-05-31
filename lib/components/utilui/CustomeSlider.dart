@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 import 'CustomeDottedLine.dart';
 import 'package:flutter/material.dart';
-import 'package:ocean_park/models/order/order.dart';
+import '/models/order/order.dart';
 
 class CustomeSlider extends StatelessWidget {
   final Order order;

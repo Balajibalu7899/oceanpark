@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/services/products_service.dart';
+import '/services/products_service.dart';
 import 'package:provider/provider.dart';
 
 class CustomeSearchBar extends StatelessWidget {

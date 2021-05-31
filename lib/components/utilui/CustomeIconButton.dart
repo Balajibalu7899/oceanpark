@@ -14,7 +14,9 @@ class CustomeIconButton extends StatelessWidget {
         style: ButtonStyle(
           padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(5)),
         ),
-        onPressed: callback,
+        onPressed: () {
+          callback();
+        },
         child: Icon(
           iconname,
           color: Colors.white,

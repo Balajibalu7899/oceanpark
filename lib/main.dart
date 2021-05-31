@@ -1,19 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ocean_park/global/themes/light_theme.dart';
-import 'package:ocean_park/intros/CreateAccount.dart';
-import 'package:ocean_park/intros/LoginPage.dart';
-import 'package:ocean_park/intros/Splash.dart';
-import 'package:ocean_park/pages/main/HomeMain.dart';
-import 'package:ocean_park/services/cart_service.dart';
-import 'package:ocean_park/services/category_service.dart';
-import 'package:ocean_park/services/coupon_service.dart';
-import 'package:ocean_park/services/custome_service.dart';
-import 'package:ocean_park/services/auth_service.dart';
-import 'package:ocean_park/services/offer_service.dart';
-import 'package:ocean_park/services/order_service.dart';
-import 'package:ocean_park/services/page_nav_service.dart';
-import 'package:ocean_park/services/products_service.dart';
+import '/global/themes/light_theme.dart';
+import '/intros/CreateAccount.dart';
+import '/intros/LoginPage.dart';
+import '/intros/Splash.dart';
+import '/pages/main/HomeMain.dart';
+import '/services/cart_service.dart';
+import '/services/category_service.dart';
+import '/services/coupon_service.dart';
+import '/services/custome_service.dart';
+import '/services/auth_service.dart';
+import '/services/offer_service.dart';
+import '/services/order_service.dart';
+import '/services/page_nav_service.dart';
+import '/services/products_service.dart';
 import 'package:provider/provider.dart';
 
 void main() {

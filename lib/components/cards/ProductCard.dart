@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/models/product/product.dart';
-import 'package:ocean_park/pages/sub/ProductDetailsPage.dart';
-import 'package:ocean_park/global/texts/light_container_properties.dart';
+import '/models/product/product.dart';
+import '/pages/sub/ProductDetailsPage.dart';
+import '/global/texts/light_container_properties.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;

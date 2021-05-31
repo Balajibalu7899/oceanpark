@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/components/utilui/CustomSnackBar.dart';
-import 'package:ocean_park/components/utilui/CustomeOutlineButton.dart';
-import 'package:ocean_park/components/utilui/CustomeTextField.dart';
-import 'package:ocean_park/global/colors/light_colors.dart';
-import 'package:ocean_park/intros/PhoneLogin.dart';
-import 'package:ocean_park/services/auth_service.dart';
+import '/components/utilui/CustomSnackBar.dart';
+import '/components/utilui/CustomeOutlineButton.dart';
+import '/components/utilui/CustomeTextField.dart';
+import '/global/colors/light_colors.dart';
+import '/intros/PhoneLogin.dart';
+import '/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {

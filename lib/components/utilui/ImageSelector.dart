@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ocean_park/services/imageupload_service.dart';
+import '/services/imageupload_service.dart';
 
 class ImageSelector {
   choseImage(BuildContext context, String path, Function setUrl) {

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ocean_park/models/order/payment_method.dart';
-import 'package:ocean_park/models/payment/payment.dart';
+import '/models/order/payment_method.dart';
+import '/models/payment/payment.dart';
 
 import 'address.dart';
 import 'order_product.dart';
